@@ -1,5 +1,13 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
-import { Play, Pause, Square, RotateCcw, Clock, Target, BarChart3 } from 'lucide-react'
+import {
+  Play,
+  Pause,
+  Square,
+  RotateCcw,
+  Clock,
+  Target,
+  BarChart3,
+} from 'lucide-react'
 import { useUIStore } from '@/app/store/useUI'
 import { Task } from '@/app/db/schema'
 import { cn } from '@/lib/utils'
@@ -16,7 +24,9 @@ interface FocusSession {
 
 export function Focus() {
   const [sessions, setSessions] = useState<FocusSession[]>([])
-  const [currentSession, setCurrentSession] = useState<FocusSession | null>(null)
+  const [currentSession, setCurrentSession] = useState<FocusSession | null>(
+    null
+  )
   const [timeLeft, setTimeLeft] = useState(25 * 60) // 25 minutes in seconds
   const [isRunning, setIsRunning] = useState(false)
   const [isBreak, setIsBreak] = useState(false)
@@ -72,9 +82,9 @@ export function Focus() {
       const completedSession = {
         ...currentSession,
         endTime: new Date(),
-        completed: true
+        completed: true,
       }
-      setSessions(prev => [completedSession, ...prev])
+      setSessions((prev) => [completedSession, ...prev])
     }
 
     // Switch to break or work session
@@ -89,7 +99,7 @@ export function Focus() {
         isBreak: true,
         startTime: new Date(),
         endTime: null,
-        completed: false
+        completed: false,
       })
     } else {
       // Break completed, start work session
@@ -102,7 +112,7 @@ export function Focus() {
         isBreak: false,
         startTime: new Date(),
         endTime: null,
-        completed: false
+        completed: false,
       })
     }
   }, [isBreak, selectedTask])
@@ -110,7 +120,7 @@ export function Focus() {
   useEffect(() => {
     if (isRunning && timeLeft > 0) {
       intervalRef.current = setInterval(() => {
-        setTimeLeft(prev => prev - 1)
+        setTimeLeft((prev) => prev - 1)
       }, 1000)
     } else if (timeLeft === 0) {
       handleSessionComplete()
@@ -132,7 +142,7 @@ export function Focus() {
       isBreak,
       startTime: new Date(),
       endTime: null,
-      completed: false
+      completed: false,
     })
   }
 
@@ -165,7 +175,7 @@ export function Focus() {
     return (elapsed / total) * 100
   }
 
-  const todaySessions = sessions.filter(session => {
+  const todaySessions = sessions.filter((session) => {
     if (!session.endTime) return false
     const today = new Date()
     const sessionDate = new Date(session.endTime)
@@ -173,11 +183,11 @@ export function Focus() {
   })
 
   const totalWorkTime = todaySessions
-    .filter(session => !session.isBreak)
+    .filter((session) => !session.isBreak)
     .reduce((total, session) => total + session.duration, 0)
 
   const totalBreakTime = todaySessions
-    .filter(session => session.isBreak)
+    .filter((session) => session.isBreak)
     .reduce((total, session) => total + session.duration, 0)
 
   return (
@@ -185,7 +195,9 @@ export function Focus() {
       {/* Header */}
       <div>
         <h1 className="text-3xl font-bold text-foreground">Focus</h1>
-        <p className="text-muted-foreground mt-2">Pomodoro timer for productive work sessions</p>
+        <p className="text-muted-foreground mt-2">
+          Pomodoro timer for productive work sessions
+        </p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -194,20 +206,25 @@ export function Focus() {
           {/* Timer Display */}
           <div className="bg-card p-8 rounded-lg border border-border text-center">
             <div className="mb-6">
-              <div className={cn(
-                "text-6xl font-bold mb-2",
-                isBreak ? "text-green-500" : "text-blue-500"
-              )}>
+              <div
+                className={cn(
+                  'text-6xl font-bold mb-2',
+                  isBreak ? 'text-green-500' : 'text-blue-500'
+                )}
+              >
                 {formatTime(timeLeft)}
               </div>
               <div className="text-lg text-muted-foreground">
-                {isBreak ? "Break Time" : "Focus Time"}
+                {isBreak ? 'Break Time' : 'Focus Time'}
               </div>
             </div>
 
             {/* Progress Ring */}
             <div className="relative w-48 h-48 mx-auto mb-6">
-              <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+              <svg
+                className="w-full h-full transform -rotate-90"
+                viewBox="0 0 100 100"
+              >
                 <circle
                   cx="50"
                   cy="50"
@@ -227,8 +244,8 @@ export function Focus() {
                   strokeDasharray={`${2 * Math.PI * 40}`}
                   strokeDashoffset={`${2 * Math.PI * 40 * (1 - getProgress() / 100)}`}
                   className={cn(
-                    "transition-all duration-1000 ease-in-out",
-                    isBreak ? "text-green-500" : "text-blue-500"
+                    'transition-all duration-1000 ease-in-out',
+                    isBreak ? 'text-green-500' : 'text-blue-500'
                   )}
                 />
               </svg>
@@ -253,7 +270,7 @@ export function Focus() {
                   <span>Pause</span>
                 </button>
               )}
-              
+
               <button
                 onClick={resetSession}
                 className="flex items-center space-x-2 px-4 py-3 bg-muted text-muted-foreground rounded-lg hover:bg-muted/80 transition-colors"
@@ -266,21 +283,27 @@ export function Focus() {
 
           {/* Task Selection */}
           <div className="bg-card p-6 rounded-lg border border-border">
-            <h3 className="text-lg font-semibold text-foreground mb-4">Select Task</h3>
+            <h3 className="text-lg font-semibold text-foreground mb-4">
+              Select Task
+            </h3>
             <div className="space-y-2">
               {availableTasks.map((task) => (
                 <button
                   key={task.id}
                   onClick={() => setSelectedTask(task)}
                   className={cn(
-                    "w-full text-left p-3 rounded-lg border transition-colors",
+                    'w-full text-left p-3 rounded-lg border transition-colors',
                     selectedTask?.id === task.id
-                      ? "border-primary bg-primary/5"
-                      : "border-border hover:border-primary/50"
+                      ? 'border-primary bg-primary/5'
+                      : 'border-border hover:border-primary/50'
                   )}
                 >
-                  <div className="font-medium text-foreground">{task.title}</div>
-                  <div className="text-sm text-muted-foreground">{task.description}</div>
+                  <div className="font-medium text-foreground">
+                    {task.title}
+                  </div>
+                  <div className="text-sm text-muted-foreground">
+                    {task.description}
+                  </div>
                   <div className="flex items-center space-x-2 mt-2">
                     <div className="flex items-center space-x-1">
                       <Target className="h-3 w-3 text-muted-foreground" />
@@ -299,35 +322,43 @@ export function Focus() {
         <div className="space-y-6">
           {/* Today's Stats */}
           <div className="bg-card p-6 rounded-lg border border-border">
-            <h3 className="text-lg font-semibold text-foreground mb-4">Today&apos;s Stats</h3>
+            <h3 className="text-lg font-semibold text-foreground mb-4">
+              Today&apos;s Stats
+            </h3>
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-2">
                   <Clock className="h-4 w-4 text-blue-500" />
-                  <span className="text-sm text-muted-foreground">Work Time</span>
+                  <span className="text-sm text-muted-foreground">
+                    Work Time
+                  </span>
                 </div>
                 <span className="font-medium text-foreground">
                   {formatTime(totalWorkTime)}
                 </span>
               </div>
-              
+
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-2">
                   <Clock className="h-4 w-4 text-green-500" />
-                  <span className="text-sm text-muted-foreground">Break Time</span>
+                  <span className="text-sm text-muted-foreground">
+                    Break Time
+                  </span>
                 </div>
                 <span className="font-medium text-foreground">
                   {formatTime(totalBreakTime)}
                 </span>
               </div>
-              
+
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-2">
                   <BarChart3 className="h-4 w-4 text-purple-500" />
-                  <span className="text-sm text-muted-foreground">Sessions</span>
+                  <span className="text-sm text-muted-foreground">
+                    Sessions
+                  </span>
                 </div>
                 <span className="font-medium text-foreground">
-                  {todaySessions.filter(s => !s.isBreak).length}
+                  {todaySessions.filter((s) => !s.isBreak).length}
                 </span>
               </div>
             </div>
@@ -335,17 +366,24 @@ export function Focus() {
 
           {/* Recent Sessions */}
           <div className="bg-card p-6 rounded-lg border border-border">
-            <h3 className="text-lg font-semibold text-foreground mb-4">Recent Sessions</h3>
+            <h3 className="text-lg font-semibold text-foreground mb-4">
+              Recent Sessions
+            </h3>
             <div className="space-y-3">
               {sessions.slice(0, 5).map((session) => (
-                <div key={session.id} className="flex items-center justify-between text-sm">
+                <div
+                  key={session.id}
+                  className="flex items-center justify-between text-sm"
+                >
                   <div className="flex items-center space-x-2">
-                    <div className={cn(
-                      "w-2 h-2 rounded-full",
-                      session.isBreak ? "bg-green-500" : "bg-blue-500"
-                    )} />
+                    <div
+                      className={cn(
+                        'w-2 h-2 rounded-full',
+                        session.isBreak ? 'bg-green-500' : 'bg-blue-500'
+                      )}
+                    />
                     <span className="text-muted-foreground">
-                      {session.isBreak ? "Break" : "Work"}
+                      {session.isBreak ? 'Break' : 'Work'}
                     </span>
                   </div>
                   <span className="font-medium text-foreground">
@@ -363,7 +401,9 @@ export function Focus() {
 
           {/* Tips */}
           <div className="bg-card p-6 rounded-lg border border-border">
-            <h3 className="text-lg font-semibold text-foreground mb-4">Focus Tips</h3>
+            <h3 className="text-lg font-semibold text-foreground mb-4">
+              Focus Tips
+            </h3>
             <div className="space-y-3 text-sm text-muted-foreground">
               <div>• Work in 25-minute focused sessions</div>
               <div>• Take 5-minute breaks between sessions</div>

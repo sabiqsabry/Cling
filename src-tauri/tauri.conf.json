@@ -36,18 +36,5 @@
       "icons/icon.ico"
     ]
   },
-  "plugins": {
-    "sql": {
-      "preload": ["sqlite:cling.db"]
-    },
-    "notification": {
-      "all": true
-    },
-    "globalShortcut": {
-      "all": true
-    },
-    "singleInstance": {
-      "all": true
-    }
-  }
+  "plugins": {}
 }

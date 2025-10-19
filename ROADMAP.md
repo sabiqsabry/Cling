@@ -5,6 +5,7 @@ This roadmap outlines the current status and future plans for the Cling desktop 
 ## ✅ Completed Features (v1.0.0)
 
 ### Core Infrastructure
+
 - [x] Tauri 2.x + React 18 + TypeScript setup
 - [x] SQLite with SQLCipher encryption
 - [x] Complete database schema with migrations
@@ -14,6 +15,7 @@ This roadmap outlines the current status and future plans for the Cling desktop 
 - [x] Comprehensive routing with React Router
 
 ### User Interface
+
 - [x] Modern UI with Tailwind CSS + shadcn/ui
 - [x] Responsive layout with collapsible sidebar
 - [x] Dark/light theme support
@@ -21,6 +23,7 @@ This roadmap outlines the current status and future plans for the Cling desktop 
 - [x] Comprehensive navigation system
 
 ### Task Management
+
 - [x] TaskCard component with rich metadata
 - [x] TaskEditor drawer for comprehensive editing
 - [x] QuickAdd modal with natural language parsing
@@ -28,6 +31,7 @@ This roadmap outlines the current status and future plans for the Cling desktop 
 - [x] Priority, tags, dates, and recurrence support
 
 ### Multiple Views
+
 - [x] Dashboard with overview and statistics
 - [x] Today view with overdue items
 - [x] List view with filtering and grouping
@@ -39,6 +43,7 @@ This roadmap outlines the current status and future plans for the Cling desktop 
 - [x] Settings page with import/export
 
 ### Advanced Features
+
 - [x] Natural language parsing for quick task creation
 - [x] Mini window components for macOS/Windows
 - [x] URL scheme handlers for external integration
@@ -48,6 +53,7 @@ This roadmap outlines the current status and future plans for the Cling desktop 
 - [x] Protocol handler registration
 
 ### Data Management
+
 - [x] Complete CRUD operations for all entities
 - [x] Seed data generator with sample content
 - [x] CSV import/export functionality
@@ -57,6 +63,7 @@ This roadmap outlines the current status and future plans for the Cling desktop 
 ## 🚧 In Progress
 
 ### Quality Assurance
+
 - [ ] Comprehensive test coverage
 - [ ] Performance optimization
 - [ ] Accessibility improvements
@@ -65,6 +72,7 @@ This roadmap outlines the current status and future plans for the Cling desktop 
 ## 📋 Planned Features (v1.1.0)
 
 ### Cloud Synchronization
+
 - [ ] Supabase integration
 - [ ] Real-time sync across devices
 - [ ] User authentication
@@ -72,6 +80,7 @@ This roadmap outlines the current status and future plans for the Cling desktop 
 - [ ] Conflict resolution
 
 ### Enhanced Productivity
+
 - [ ] Smart suggestions based on patterns
 - [ ] Time tracking integration
 - [ ] Goal setting and progress tracking
@@ -79,6 +88,7 @@ This roadmap outlines the current status and future plans for the Cling desktop 
 - [ ] Integration with external calendars
 
 ### Collaboration Features
+
 - [ ] Team workspaces
 - [ ] Task assignment and delegation
 - [ ] Comments and mentions
@@ -86,6 +96,7 @@ This roadmap outlines the current status and future plans for the Cling desktop 
 - [ ] File attachments
 
 ### Advanced UI/UX
+
 - [ ] Custom themes and personalization
 - [ ] Advanced keyboard shortcuts
 - [ ] Gesture support for touch devices
@@ -95,6 +106,7 @@ This roadmap outlines the current status and future plans for the Cling desktop 
 ## 🎯 Future Versions
 
 ### v1.2.0 - Mobile Companion
+
 - [ ] Mobile app (React Native)
 - [ ] Cloud sync with desktop
 - [ ] Offline support
@@ -102,6 +114,7 @@ This roadmap outlines the current status and future plans for the Cling desktop 
 - [ ] Location-based reminders
 
 ### v1.3.0 - Enterprise Features
+
 - [ ] Advanced user management
 - [ ] SSO integration
 - [ ] Audit logs
@@ -109,6 +122,7 @@ This roadmap outlines the current status and future plans for the Cling desktop 
 - [ ] API for third-party integrations
 
 ### v2.0.0 - AI Integration
+
 - [ ] AI-powered task prioritization
 - [ ] Smart scheduling suggestions
 - [ ] Natural language task processing
@@ -118,6 +132,7 @@ This roadmap outlines the current status and future plans for the Cling desktop 
 ## 🔧 Technical Improvements
 
 ### Performance
+
 - [ ] Database query optimization
 - [ ] Memory usage optimization
 - [ ] Startup time improvement
@@ -125,6 +140,7 @@ This roadmap outlines the current status and future plans for the Cling desktop 
 - [ ] Lazy loading implementation
 
 ### Developer Experience
+
 - [ ] Improved documentation
 - [ ] Better error handling
 - [ ] Enhanced debugging tools
@@ -132,6 +148,7 @@ This roadmap outlines the current status and future plans for the Cling desktop 
 - [ ] Automated testing
 
 ### Platform Support
+
 - [ ] Linux AppImage support
 - [ ] Windows Store distribution
 - [ ] macOS App Store submission
@@ -141,6 +158,7 @@ This roadmap outlines the current status and future plans for the Cling desktop 
 ## 📊 Metrics and Analytics
 
 ### User Engagement
+
 - [ ] Usage analytics (privacy-focused)
 - [ ] Feature adoption tracking
 - [ ] Performance monitoring
@@ -148,6 +166,7 @@ This roadmap outlines the current status and future plans for the Cling desktop 
 - [ ] User feedback collection
 
 ### Product Metrics
+
 - [ ] Task completion rates
 - [ ] Time spent in focus mode
 - [ ] Habit streak statistics
@@ -157,6 +176,7 @@ This roadmap outlines the current status and future plans for the Cling desktop 
 ## 🌐 Community and Ecosystem
 
 ### Open Source
+
 - [ ] Community guidelines
 - [ ] Contributor documentation
 - [ ] Plugin system architecture
@@ -164,6 +184,7 @@ This roadmap outlines the current status and future plans for the Cling desktop 
 - [ ] Developer resources
 
 ### Integrations
+
 - [ ] Zapier integration
 - [ ] IFTTT support
 - [ ] Google Calendar sync
@@ -173,21 +194,25 @@ This roadmap outlines the current status and future plans for the Cling desktop 
 ## 📅 Timeline
 
 ### Q1 2024
+
 - [ ] v1.0.0 release
 - [ ] Cloud sync beta
 - [ ] Mobile app planning
 
 ### Q2 2024
+
 - [ ] v1.1.0 with cloud sync
 - [ ] Collaboration features
 - [ ] Performance improvements
 
 ### Q3 2024
+
 - [ ] v1.2.0 mobile companion
 - [ ] Advanced analytics
 - [ ] Enterprise features
 
 ### Q4 2024
+
 - [ ] v1.3.0 enterprise edition
 - [ ] AI integration planning
 - [ ] Community ecosystem
@@ -212,4 +237,4 @@ We welcome contributions! Here's how you can help:
 
 ---
 
-*This roadmap is a living document and may change based on user feedback and development priorities. Last updated: January 2024*
+_This roadmap is a living document and may change based on user feedback and development priorities. Last updated: January 2024_

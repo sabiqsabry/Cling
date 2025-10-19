@@ -9,10 +9,11 @@ Before setting up Cling, ensure you have the following installed on your system:
 ### Required Software
 
 1. **Node.js** (v18 or later)
+
    ```bash
    # Check version
    node --version
-   
+
    # Install via nvm (recommended)
    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
    nvm install 18
@@ -20,16 +21,18 @@ Before setting up Cling, ensure you have the following installed on your system:
    ```
 
 2. **pnpm** (Package Manager)
+
    ```bash
    npm install -g pnpm
    ```
 
 3. **Rust** (for Tauri backend)
+
    ```bash
    # Install Rust
    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
    source ~/.cargo/env
-   
+
    # Verify installation
    rustc --version
    cargo --version
@@ -43,14 +46,17 @@ Before setting up Cling, ensure you have the following installed on your system:
 ### Platform-Specific Requirements
 
 #### macOS
+
 - Xcode Command Line Tools: `xcode-select --install`
 - macOS 10.15+ (Catalina or later)
 
 #### Windows
+
 - Microsoft Visual Studio C++ Build Tools
 - WebView2 (usually pre-installed on Windows 10/11)
 
 #### Linux (Ubuntu/Debian)
+
 ```bash
 sudo apt update
 sudo apt install libwebkit2gtk-4.0-dev \
@@ -66,12 +72,14 @@ sudo apt install libwebkit2gtk-4.0-dev \
 ## Installation
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/sabiqsabry/Cling.git
    cd Cling
    ```
 
 2. **Install dependencies**
+
    ```bash
    pnpm install
    ```
@@ -93,6 +101,7 @@ pnpm tauri:dev
 ```
 
 This will:
+
 - Start the Vite development server on `http://localhost:1420`
 - Launch the Tauri desktop application
 - Enable hot reloading for both frontend and backend changes
@@ -125,6 +134,7 @@ pnpm format:check       # Check code formatting
 Cling uses SQLite with SQLCipher for local data storage. The database is automatically initialized on first run.
 
 ### Database Location
+
 - **macOS**: `~/Library/Application Support/app.cling.desktop/cling.db`
 - **Windows**: `%APPDATA%\app.cling.desktop\cling.db`
 - **Linux**: `~/.local/share/app.cling.desktop/cling.db`
@@ -156,6 +166,7 @@ pnpm tauri:build --target x86_64-unknown-linux-gnu # Linux
 ```
 
 ### Output Location
+
 Built applications will be in `src-tauri/target/release/bundle/`
 
 ## Configuration
@@ -211,6 +222,7 @@ Main configuration is in `src-tauri/tauri.conf.json`:
 ### Common Issues
 
 1. **"cargo not found" error**
+
    ```bash
    # Install Rust
    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
@@ -218,6 +230,7 @@ Main configuration is in `src-tauri/tauri.conf.json`:
    ```
 
 2. **"pnpm not found" error**
+
    ```bash
    npm install -g pnpm
    ```
@@ -228,6 +241,7 @@ Main configuration is in `src-tauri/tauri.conf.json`:
    - Try deleting the database file to recreate it
 
 4. **Build failures**
+
    ```bash
    # Clean build cache
    pnpm clean

@@ -1,13 +1,5 @@
-import { useState, useEffect, useRef } from 'react'
-import {
-  Plus,
-  ZoomIn,
-  ZoomOut,
-  RotateCcw,
-  Calendar,
-  Clock,
-  Tag,
-} from 'lucide-react'
+import { useState, useEffect, useRef, useCallback } from 'react'
+import { Plus, ZoomIn, ZoomOut, RotateCcw } from 'lucide-react'
 import { useUIStore } from '@/app/store/useUI'
 import { QuickAddModal } from '@/app/components/tasks/QuickAddModal'
 import { TaskEditor } from '@/app/components/tasks/TaskEditor'
@@ -268,10 +260,10 @@ export function Timeline() {
     )
   }
 
-  const handleEditTask = (task: Task) => {
+  const handleEditTask = useCallback((task: Task) => {
     setSelectedTask(task)
     setEditorOpen(true)
-  }
+  }, [])
 
   const handleDeleteTask = (taskId: string) => {
     setTasks((prev) => prev.filter((task) => task.id !== taskId))

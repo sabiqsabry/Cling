@@ -1,5 +1,13 @@
 import { useState, useEffect } from 'react'
-import { Plus, Target, Calendar, TrendingUp, CheckCircle, Circle, Flame } from 'lucide-react'
+import {
+  Plus,
+  Target,
+  Calendar,
+  TrendingUp,
+  CheckCircle,
+  Circle,
+  Flame,
+} from 'lucide-react'
 import { useUIStore } from '@/app/store/useUI'
 import { cn } from '@/lib/utils'
 
@@ -42,7 +50,7 @@ export function Habits() {
         streak: 12,
         schedule: {
           frequency: 'daily',
-          days: [1, 2, 3, 4, 5, 6, 7]
+          days: [1, 2, 3, 4, 5, 6, 7],
         },
         color: '#10b981',
         created_at: new Date().toISOString(),
@@ -55,7 +63,7 @@ export function Habits() {
         streak: 8,
         schedule: {
           frequency: 'daily',
-          days: [1, 2, 3, 4, 5, 6, 7]
+          days: [1, 2, 3, 4, 5, 6, 7],
         },
         color: '#3b82f6',
         created_at: new Date().toISOString(),
@@ -68,7 +76,7 @@ export function Habits() {
         streak: 5,
         schedule: {
           frequency: 'daily',
-          days: [1, 2, 3, 4, 5]
+          days: [1, 2, 3, 4, 5],
         },
         color: '#8b5cf6',
         created_at: new Date().toISOString(),
@@ -81,7 +89,7 @@ export function Habits() {
         streak: 3,
         schedule: {
           frequency: 'weekly',
-          days: [0] // Sunday
+          days: [0], // Sunday
         },
         color: '#f59e0b',
         created_at: new Date().toISOString(),
@@ -100,7 +108,7 @@ export function Habits() {
           value: Math.random() > 0.3 ? 1 : 0,
           completed: Math.random() > 0.3,
         }
-      })
+      }),
     ]
 
     setHabits(mockHabits)
@@ -109,49 +117,60 @@ export function Habits() {
   }, [])
 
   const toggleHabitLog = (habitId: string, date: string) => {
-    const existingLog = habitLogs.find(log => log.habit_id === habitId && log.date === date)
-    
+    const existingLog = habitLogs.find(
+      (log) => log.habit_id === habitId && log.date === date
+    )
+
     if (existingLog) {
       // Toggle existing log
-      setHabitLogs(prev => prev.map(log => 
-        log.id === existingLog.id 
-          ? { ...log, completed: !log.completed, value: log.completed ? 0 : 1 }
-          : log
-      ))
+      setHabitLogs((prev) =>
+        prev.map((log) =>
+          log.id === existingLog.id
+            ? {
+                ...log,
+                completed: !log.completed,
+                value: log.completed ? 0 : 1,
+              }
+            : log
+        )
+      )
     } else {
       // Create new log
       const newLog: HabitLog = {
-        id: Math.random().toString(36).substr(2, 9),
+        id: crypto.randomUUID(),
         habit_id: habitId,
         date,
         value: 1,
         completed: true,
       }
-      setHabitLogs(prev => [newLog, ...prev])
+      setHabitLogs((prev) => [newLog, ...prev])
     }
   }
 
   const getHabitLogForDate = (habitId: string, date: string) => {
-    return habitLogs.find(log => log.habit_id === habitId && log.date === date)
+    return habitLogs.find(
+      (log) => log.habit_id === habitId && log.date === date
+    )
   }
 
   const generateHeatmapData = (habitId: string) => {
     const data = []
     const today = new Date()
-    
-    for (let i = 89; i >= 0; i--) { // Last 90 days
+
+    for (let i = 89; i >= 0; i--) {
+      // Last 90 days
       const date = new Date(today)
       date.setDate(date.getDate() - i)
       const dateStr = date.toISOString().split('T')[0]
       const log = getHabitLogForDate(habitId, dateStr)
-      
+
       data.push({
         date: dateStr,
         value: log?.value || 0,
-        completed: log?.completed || false
+        completed: log?.completed || false,
       })
     }
-    
+
     return data
   }
 
@@ -201,7 +220,9 @@ export function Habits() {
             </div>
             <div>
               <p className="text-sm text-muted-foreground">Total Habits</p>
-              <p className="text-2xl font-bold text-foreground">{habits.length}</p>
+              <p className="text-2xl font-bold text-foreground">
+                {habits.length}
+              </p>
             </div>
           </div>
         </div>
@@ -214,7 +235,7 @@ export function Habits() {
             <div>
               <p className="text-sm text-muted-foreground">Active Streaks</p>
               <p className="text-2xl font-bold text-foreground">
-                {habits.filter(h => h.streak > 0).length}
+                {habits.filter((h) => h.streak > 0).length}
               </p>
             </div>
           </div>
@@ -228,7 +249,7 @@ export function Habits() {
             <div>
               <p className="text-sm text-muted-foreground">Longest Streak</p>
               <p className="text-2xl font-bold text-foreground">
-                {Math.max(...habits.map(h => h.streak), 0)}
+                {Math.max(...habits.map((h) => h.streak), 0)}
               </p>
             </div>
           </div>
@@ -242,7 +263,10 @@ export function Habits() {
             <div>
               <p className="text-sm text-muted-foreground">Completed Today</p>
               <p className="text-2xl font-bold text-foreground">
-                {habitLogs.filter(log => log.date === today && log.completed).length}
+                {
+                  habitLogs.filter((log) => log.date === today && log.completed)
+                    .length
+                }
               </p>
             </div>
           </div>
@@ -254,27 +278,36 @@ export function Habits() {
         {habits.map((habit) => {
           const todayLog = getHabitLogForDate(habit.id, today)
           const heatmapData = generateHeatmapData(habit.id)
-          
+
           return (
-            <div key={habit.id} className="bg-card p-6 rounded-lg border border-border">
+            <div
+              key={habit.id}
+              className="bg-card p-6 rounded-lg border border-border"
+            >
               {/* Habit Header */}
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center space-x-3">
-                  <div 
+                  <div
                     className="w-4 h-4 rounded-full"
                     style={{ backgroundColor: habit.color }}
                   />
                   <div>
-                    <h3 className="font-semibold text-foreground">{habit.title}</h3>
+                    <h3 className="font-semibold text-foreground">
+                      {habit.title}
+                    </h3>
                     {habit.description && (
-                      <p className="text-sm text-muted-foreground">{habit.description}</p>
+                      <p className="text-sm text-muted-foreground">
+                        {habit.description}
+                      </p>
                     )}
                   </div>
                 </div>
                 <div className="flex items-center space-x-2">
                   <div className="flex items-center space-x-1">
                     <Flame className="h-4 w-4 text-orange-500" />
-                    <span className="text-sm font-medium text-foreground">{habit.streak}</span>
+                    <span className="text-sm font-medium text-foreground">
+                      {habit.streak}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -284,10 +317,10 @@ export function Habits() {
                 <button
                   onClick={() => toggleHabitLog(habit.id, today)}
                   className={cn(
-                    "flex items-center space-x-2 p-3 rounded-lg border transition-colors",
+                    'flex items-center space-x-2 p-3 rounded-lg border transition-colors',
                     todayLog?.completed
-                      ? "border-green-200 bg-green-50 text-green-700"
-                      : "border-border hover:border-primary"
+                      ? 'border-green-200 bg-green-50 text-green-700'
+                      : 'border-border hover:border-primary'
                   )}
                 >
                   {todayLog?.completed ? (
@@ -296,20 +329,24 @@ export function Habits() {
                     <Circle className="h-5 w-5 text-muted-foreground" />
                   )}
                   <span className="text-sm font-medium">
-                    {todayLog?.completed ? 'Completed today' : 'Mark as complete'}
+                    {todayLog?.completed
+                      ? 'Completed today'
+                      : 'Mark as complete'}
                   </span>
                 </button>
               </div>
 
               {/* Heatmap */}
               <div className="mb-4">
-                <h4 className="text-sm font-medium text-foreground mb-2">Last 90 days</h4>
+                <h4 className="text-sm font-medium text-foreground mb-2">
+                  Last 90 days
+                </h4>
                 <div className="grid grid-cols-13 gap-1">
                   {heatmapData.map((day, index) => (
                     <div
                       key={index}
                       className={cn(
-                        "w-3 h-3 rounded-sm",
+                        'w-3 h-3 rounded-sm',
                         getHeatmapIntensity(day.value)
                       )}
                       title={`${day.date}: ${day.completed ? 'Completed' : 'Not completed'}`}
@@ -320,10 +357,9 @@ export function Habits() {
 
               {/* Schedule Info */}
               <div className="text-xs text-muted-foreground">
-                {habit.schedule.frequency === 'daily' 
+                {habit.schedule.frequency === 'daily'
                   ? 'Daily habit'
-                  : `${habit.schedule.days.length} days per week`
-                }
+                  : `${habit.schedule.days.length} days per week`}
               </div>
             </div>
           )
@@ -332,7 +368,9 @@ export function Habits() {
 
       {/* Quick Actions */}
       <div className="bg-card p-6 rounded-lg border border-border">
-        <h3 className="text-lg font-semibold text-foreground mb-4">Quick Actions</h3>
+        <h3 className="text-lg font-semibold text-foreground mb-4">
+          Quick Actions
+        </h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <button
             onClick={() => setQuickAddOpen(true)}
@@ -341,12 +379,12 @@ export function Habits() {
             <Plus className="h-5 w-5" />
             <span className="font-medium">Add New Habit</span>
           </button>
-          
+
           <button className="flex items-center space-x-3 p-4 bg-muted hover:bg-muted/80 rounded-lg transition-colors">
             <TrendingUp className="h-5 w-5" />
             <span className="font-medium">View Analytics</span>
           </button>
-          
+
           <button className="flex items-center space-x-3 p-4 bg-muted hover:bg-muted/80 rounded-lg transition-colors">
             <Calendar className="h-5 w-5" />
             <span className="font-medium">Export Data</span>

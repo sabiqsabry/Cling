@@ -90,8 +90,12 @@ export const lists = {
 
   get: (id: string): Promise<List | null> => invoke('lists_get', { id }),
 
-  update: (id: string, name?: string, color?: string, ord?: number): Promise<List> =>
-    invoke('lists_update', { id, name, color, ord }),
+  update: (
+    id: string,
+    name?: string,
+    color?: string,
+    ord?: number
+  ): Promise<List> => invoke('lists_update', { id, name, color, ord }),
 
   delete: (id: string): Promise<boolean> => invoke('lists_delete', { id }),
 
@@ -166,12 +170,21 @@ export interface Habit {
 }
 
 export const habits = {
-  create: (title: string, description?: string, scheduleJson: string): Promise<Habit> =>
+  create: (
+    title: string,
+    description?: string,
+    scheduleJson: string
+  ): Promise<Habit> =>
     invoke('habits_create', { title, description, scheduleJson }),
 
   list: (): Promise<Habit[]> => invoke('habits_list', {}),
 
-  update: (id: string, title?: string, description?: string, scheduleJson?: string): Promise<Habit> =>
+  update: (
+    id: string,
+    title?: string,
+    description?: string,
+    scheduleJson?: string
+  ): Promise<Habit> =>
     invoke('habits_update', { id, title, description, scheduleJson }),
 
   delete: (id: string): Promise<boolean> => invoke('habits_delete', { id }),
@@ -216,13 +229,26 @@ export interface Attachment {
 }
 
 export const attachments = {
-  add: (taskId: string, filePath: string, fileName: string, mimeType: string, fileSizeBytes: number): Promise<Attachment> =>
-    invoke('attachments_add', { taskId, filePath, fileName, mimeType, fileSizeBytes }),
+  add: (
+    taskId: string,
+    filePath: string,
+    fileName: string,
+    mimeType: string,
+    fileSizeBytes: number
+  ): Promise<Attachment> =>
+    invoke('attachments_add', {
+      taskId,
+      filePath,
+      fileName,
+      mimeType,
+      fileSizeBytes,
+    }),
 
   list: (taskId: string): Promise<Attachment[]> =>
     invoke('attachments_list', { taskId }),
 
-  delete: (id: string): Promise<boolean> => invoke('attachments_delete', { id }),
+  delete: (id: string): Promise<boolean> =>
+    invoke('attachments_delete', { id }),
 }
 
 // Calendar commands
@@ -237,7 +263,11 @@ export interface CalendarEvent {
 }
 
 export const calendar = {
-  timeblock: (taskId: string, startTime: string, endTime: string): Promise<any> =>
+  timeblock: (
+    taskId: string,
+    startTime: string,
+    endTime: string
+  ): Promise<any> =>
     invoke('calendar_timeblock', { taskId, startTime, endTime }),
 
   events: (startDate: string, endDate: string): Promise<CalendarEvent[]> =>
@@ -252,8 +282,10 @@ export const calendar = {
 
 // OS integration commands
 export const os = {
-  registerProtocol: (scheme: string): Promise<boolean> => invoke('protocol_register', { scheme }),
-  registerGlobalShortcut: (shortcut: string): Promise<boolean> => invoke('global_shortcuts_register', { shortcut }),
+  registerProtocol: (scheme: string): Promise<boolean> =>
+    invoke('protocol_register', { scheme }),
+  registerGlobalShortcut: (shortcut: string): Promise<boolean> =>
+    invoke('global_shortcuts_register', { shortcut }),
   showTrayMini: (): Promise<boolean> => invoke('show_tray_mini'),
   showMenubarMini: (): Promise<boolean> => invoke('show_menubar_mini'),
 }
