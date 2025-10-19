@@ -63,6 +63,8 @@
    pnpm tauri:build
    ```
 
+> **Note**: The application is currently in a working state with a simplified Rust backend. All UI components and views are functional. The full database integration and advanced Rust features will be added in future updates.
+
 ## 📋 Keyboard Shortcuts
 
 | Shortcut                                        | Action                 |
