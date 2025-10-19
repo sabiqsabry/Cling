@@ -1,0 +1,14 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="256" cy="256" r="256" fill="#3b82f6"/>
+  
+  <!-- Checkmark -->
+  <path d="M200 256L240 296L312 224" stroke="white" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Task lines -->
+  <line x1="160" y1="180" x2="352" y2="180" stroke="white" stroke-width="8" stroke-linecap="round" opacity="0.7"/>
+  <line x1="160" y1="220" x2="320" y2="220" stroke="white" stroke-width="8" stroke-linecap="round" opacity="0.7"/>
+  <line x1="160" y1="260" x2="280" y2="260" stroke="white" stroke-width="8" stroke-linecap="round" opacity="0.7"/>
+  <line x1="160" y1="300" x2="340" y2="300" stroke="white" stroke-width="8" stroke-linecap="round" opacity="0.7"/>
+  <line x1="160" y1="340" x2="300" y2="340" stroke="white" stroke-width="8" stroke-linecap="round" opacity="0.7"/>
+</svg>

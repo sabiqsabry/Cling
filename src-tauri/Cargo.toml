@@ -1,0 +1,27 @@
+[package]
+name = "cling"
+version = "1.0.0"
+description = "Cross-platform TickTick-style desktop task management app"
+authors = ["sabiqsabry"]
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+name = "cling_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = ["notification-all", "global-shortcut-all", "single-instance-all"] }
+tauri-plugin-sql = { version = "2", features = ["sqlcipher"] }
+tauri-plugin-opener = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+chrono = { version = "0.4", features = ["serde"] }
+uuid = { version = "1.0", features = ["v4", "serde"] }
+tokio = { version = "1", features = ["full"] }
+sqlx = { version = "0.7", features = ["runtime-tokio-rustls", "sqlite", "chrono", "uuid"] }
+
