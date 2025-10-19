@@ -13,7 +13,7 @@ import { QuickAddModal } from '@/app/components/tasks/QuickAddModal'
 import { TaskEditor } from '@/app/components/tasks/TaskEditor'
 import { Task } from '@/app/db/schema'
 import { cn } from '@/lib/utils'
-import { Timeline } from 'vis-timeline/standalone'
+import { Timeline as VisTimeline } from 'vis-timeline/standalone'
 import { DataSet } from 'vis-data/standalone'
 
 interface TimelineItem {
@@ -40,7 +40,7 @@ export function Timeline() {
   const [selectedTask, setSelectedTask] = useState<Task | null>(null)
   const [editorOpen, setEditorOpen] = useState(false)
   const [loading, setLoading] = useState(true)
-  const [timeline, setTimeline] = useState<Timeline | null>(null)
+  const [timeline, setTimeline] = useState<VisTimeline | null>(null)
   const [currentZoom, setCurrentZoom] = useState('day')
   const timelineRef = useRef<HTMLDivElement>(null)
 
@@ -167,7 +167,7 @@ export function Timeline() {
       )
 
       // Create timeline
-      const timelineInstance = new Timeline(
+      const timelineInstance = new VisTimeline(
         timelineRef.current,
         items,
         groups,
@@ -517,7 +517,7 @@ export function Timeline() {
         onDelete={handleDeleteTask}
       />
 
-      <style jsx>{`
+      <style>{`
         .timeline-item {
           padding: 4px 8px;
           border-radius: 4px;

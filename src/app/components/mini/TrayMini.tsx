@@ -195,7 +195,7 @@ export function TrayMini({ onClose, onMaximize }: TrayMiniProps) {
 
         {/* Recent Tasks */}
         <div className="flex-1 overflow-y-auto p-3">
-          <div className-flex items-center space-x-2 mb-3>
+          <div className="flex items-center space-x-2 mb-3">
             <Calendar className="h-4 w-4 text-muted-foreground" />
             <h3 className="text-sm font-medium text-foreground">
               Recent Tasks

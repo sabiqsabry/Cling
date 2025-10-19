@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { Play, Pause, Square, RotateCcw, Clock, Target, BarChart3 } from 'lucide-react'
 import { useUIStore } from '@/app/store/useUI'
 import { Task } from '@/app/db/schema'
@@ -61,23 +61,7 @@ export function Focus() {
     },
   ]
 
-  useEffect(() => {
-    if (isRunning && timeLeft > 0) {
-      intervalRef.current = setInterval(() => {
-        setTimeLeft(prev => prev - 1)
-      }, 1000)
-    } else if (timeLeft === 0) {
-      handleSessionComplete()
-    }
-
-    return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current)
-      }
-    }
-  }, [isRunning, timeLeft])
-
-  const handleSessionComplete = () => {
+  const handleSessionComplete = useCallback(() => {
     setIsRunning(false)
     if (intervalRef.current) {
       clearInterval(intervalRef.current)
@@ -121,7 +105,23 @@ export function Focus() {
         completed: false
       })
     }
-  }
+  }, [isBreak, selectedTask])
+
+  useEffect(() => {
+    if (isRunning && timeLeft > 0) {
+      intervalRef.current = setInterval(() => {
+        setTimeLeft(prev => prev - 1)
+      }, 1000)
+    } else if (timeLeft === 0) {
+      handleSessionComplete()
+    }
+
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current)
+      }
+    }
+  }, [isRunning, timeLeft, handleSessionComplete])
 
   const startSession = () => {
     setIsRunning(true)
