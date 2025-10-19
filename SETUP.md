@@ -1,326 +1,262 @@
 # Cling Setup Guide
 
-This guide will help you set up Cling for development and production use.
+This guide will help you set up the Cling desktop application for development and production use.
 
-## 📋 Prerequisites
+## Prerequisites
+
+Before setting up Cling, ensure you have the following installed on your system:
 
 ### Required Software
 
-#### 1. Rust
+1. **Node.js** (v18 or later)
+   ```bash
+   # Check version
+   node --version
+   
+   # Install via nvm (recommended)
+   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+   nvm install 18
+   nvm use 18
+   ```
 
-Install Rust via [rustup](https://rustup.rs/):
+2. **pnpm** (Package Manager)
+   ```bash
+   npm install -g pnpm
+   ```
 
-```bash
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-source ~/.cargo/env
-rustup update
-```
+3. **Rust** (for Tauri backend)
+   ```bash
+   # Install Rust
+   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+   source ~/.cargo/env
+   
+   # Verify installation
+   rustc --version
+   cargo --version
+   ```
 
-#### 2. Node.js & pnpm
+4. **Tauri CLI**
+   ```bash
+   cargo install tauri-cli
+   ```
 
-- **Node.js** 18 or later: [Download](https://nodejs.org/)
-- **pnpm** (recommended package manager):
-
-```bash
-npm install -g pnpm
-```
-
-#### 3. Platform-Specific Tools
-
-##### macOS
-
-```bash
-# Install Xcode Command Line Tools
-xcode-select --install
-
-# Verify installation
-rustc --version
-node --version
-pnpm --version
-```
-
-##### Windows
-
-1. Install [Visual Studio Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/)
-2. Install [WebView2 Runtime](https://developer.microsoft.com/en-us/microsoft-edge/webview2/)
-3. Restart your terminal
-
-##### Linux (Ubuntu/Debian)
-
-```bash
-sudo apt update
-sudo apt install build-essential libwebkit2gtk-4.0-dev libssl-dev libgtk-3-dev libayatana-appindicator3-dev librsvg2-dev
-
-# For Arch Linux
-sudo pacman -S webkit2gtk base-devel curl wget file openssl appmenu-gtk-module gtk3 libappindicator-gtk3 librsvg libvips
-```
-
-## 🚀 Development Setup
-
-### 1. Clone the Repository
-
-```bash
-git clone https://github.com/sabiqsabry/Cling.git
-cd Cling
-```
-
-### 2. Install Dependencies
-
-```bash
-# Install Node.js dependencies
-pnpm install
-
-# Install Rust dependencies (automatic on first build)
-```
-
-### 3. Development Commands
-
-```bash
-# Start development server (frontend only)
-pnpm dev
-
-# Start Tauri development (full app)
-pnpm tauri:dev
-
-# Build for production
-pnpm tauri:build
-
-# Run tests
-pnpm test
-
-# Lint code
-pnpm lint
-
-# Type check
-pnpm typecheck
-```
-
-### 4. Verify Installation
-
-Run the development server:
-
-```bash
-pnpm tauri:dev
-```
-
-You should see:
-
-- A desktop window opens with the Cling interface
-- Sample data is loaded automatically
-- All views (Dashboard, List, Kanban, etc.) are accessible
-
-## 🏗️ Build for Production
-
-### 1. Build the Application
-
-```bash
-pnpm tauri:build
-```
-
-### 2. Find Your Builds
-
-After building, you'll find the installers in:
-
-- **macOS**: `src-tauri/target/release/bundle/dmg/Cling_1.0.0_x64.dmg`
-- **Windows**: `src-tauri/target/release/bundle/msi/Cling_1.0.0_x64_en-US.msi`
-- **Linux**: `src-tauri/target/release/bundle/deb/cling_1.0.0_amd64.deb`
-
-### 3. Installation
+### Platform-Specific Requirements
 
 #### macOS
-
-1. Double-click the `.dmg` file
-2. Drag Cling to Applications folder
-3. Launch from Applications or Spotlight
+- Xcode Command Line Tools: `xcode-select --install`
+- macOS 10.15+ (Catalina or later)
 
 #### Windows
+- Microsoft Visual Studio C++ Build Tools
+- WebView2 (usually pre-installed on Windows 10/11)
 
-1. Run the `.msi` installer
-2. Follow the installation wizard
-3. Launch from Start Menu
+#### Linux (Ubuntu/Debian)
+```bash
+sudo apt update
+sudo apt install libwebkit2gtk-4.0-dev \
+    build-essential \
+    curl \
+    wget \
+    libssl-dev \
+    libgtk-3-dev \
+    libayatana-appindicator3-dev \
+    librsvg2-dev
+```
 
-#### Linux
+## Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/sabiqsabry/Cling.git
+   cd Cling
+   ```
+
+2. **Install dependencies**
+   ```bash
+   pnpm install
+   ```
+
+3. **Install Rust dependencies**
+   ```bash
+   cd src-tauri
+   cargo build
+   cd ..
+   ```
+
+## Development
+
+### Running the Development Server
 
 ```bash
-sudo dpkg -i cling_1.0.0_amd64.deb
-cling
+# Start the development server
+pnpm tauri:dev
 ```
 
-## ⚙️ Configuration
+This will:
+- Start the Vite development server on `http://localhost:1420`
+- Launch the Tauri desktop application
+- Enable hot reloading for both frontend and backend changes
 
-### Environment Variables (Optional)
+### Available Scripts
 
-Create a `.env` file in the project root for Supabase integration:
+```bash
+# Development
+pnpm dev                 # Start Vite dev server only
+pnpm tauri:dev          # Start Tauri development app
+
+# Building
+pnpm build              # Build frontend only
+pnpm tauri:build        # Build complete desktop app
+
+# Quality Checks
+pnpm lint               # Run ESLint
+pnpm lint:fix           # Fix ESLint errors
+pnpm typecheck          # Run TypeScript checks
+pnpm test               # Run tests
+pnpm test:ui            # Run tests with UI
+
+# Formatting
+pnpm format             # Format code with Prettier
+pnpm format:check       # Check code formatting
+```
+
+## Database Setup
+
+Cling uses SQLite with SQLCipher for local data storage. The database is automatically initialized on first run.
+
+### Database Location
+- **macOS**: `~/Library/Application Support/app.cling.desktop/cling.db`
+- **Windows**: `%APPDATA%\app.cling.desktop\cling.db`
+- **Linux**: `~/.local/share/app.cling.desktop/cling.db`
+
+### Manual Database Operations
+
+```bash
+# Reset database to sample data (from within the app)
+# Go to Settings > Data Management > Reset to Sample Data
+
+# Or manually delete the database file to start fresh
+rm ~/Library/Application\ Support/app.cling.desktop/cling.db  # macOS
+# The app will recreate it on next launch
+```
+
+## Building for Production
+
+### Build the Application
+
+```bash
+# Build for current platform
+pnpm tauri:build
+
+# Build for specific platform
+pnpm tauri:build --target x86_64-apple-darwin  # macOS Intel
+pnpm tauri:build --target aarch64-apple-darwin # macOS Apple Silicon
+pnpm tauri:build --target x86_64-pc-windows-msvc # Windows
+pnpm tauri:build --target x86_64-unknown-linux-gnu # Linux
+```
+
+### Output Location
+Built applications will be in `src-tauri/target/release/bundle/`
+
+## Configuration
+
+### Environment Variables
+
+Create a `.env` file in the project root:
 
 ```env
-# Supabase Configuration (optional - app works without these)
-VITE_SUPABASE_URL=https://your-project.supabase.co
-VITE_SUPABASE_ANON_KEY=your-anon-key-here
+# Development
+TAURI_DEV_HOST=localhost
 
-# App Configuration
+# Production
 VITE_APP_NAME=Cling
 VITE_APP_VERSION=1.0.0
+
+# Supabase (for cloud sync - optional)
+VITE_SUPABASE_URL=your_supabase_url
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
 ```
 
-**Note**: Cling works perfectly in local-only mode without these variables.
+### Tauri Configuration
 
-### Database
+Main configuration is in `src-tauri/tauri.conf.json`:
 
-Cling uses SQLite with SQLCipher encryption:
+```json
+{
+  "productName": "Cling",
+  "version": "1.0.0",
+  "identifier": "app.cling.desktop",
+  "build": {
+    "beforeDevCommand": "pnpm dev",
+    "devUrl": "http://localhost:1420",
+    "beforeBuildCommand": "pnpm build",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "Cling",
+        "width": 1200,
+        "height": 800,
+        "minWidth": 800,
+        "minHeight": 600
+      }
+    ]
+  }
+}
+```
 
-- **Location**: `~/Library/Application Support/app.cling.desktop/` (macOS)
-- **Location**: `%APPDATA%/app.cling.desktop/` (Windows)
-- **Encryption**: Automatic with system keychain integration
-
-### Settings
-
-Access settings within the app:
-
-1. Click the **Settings** button in the sidebar
-2. Configure preferences for:
-   - Theme (Light/Dark/System)
-   - Mini-window behavior
-   - Keyboard shortcuts
-   - Data management
-
-## 🔧 Troubleshooting
+## Troubleshooting
 
 ### Common Issues
 
-#### Build Errors
+1. **"cargo not found" error**
+   ```bash
+   # Install Rust
+   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+   source ~/.cargo/env
+   ```
 
-**Error**: `error: linker 'cc' not found`
+2. **"pnpm not found" error**
+   ```bash
+   npm install -g pnpm
+   ```
 
-```bash
-# macOS
-xcode-select --install
+3. **Database connection issues**
+   - Check file permissions in the app data directory
+   - Ensure no other process is using the database
+   - Try deleting the database file to recreate it
 
-# Ubuntu/Debian
-sudo apt install build-essential
+4. **Build failures**
+   ```bash
+   # Clean build cache
+   pnpm clean
+   cd src-tauri
+   cargo clean
+   cd ..
+   pnpm tauri:build
+   ```
 
-# Windows
-# Install Visual Studio Build Tools
-```
-
-**Error**: `WebView2 not found`
-
-```bash
-# Windows only
-# Download and install WebView2 Runtime
-```
-
-#### Runtime Errors
-
-**Error**: `Database initialization failed`
-
-- Check file permissions in app data directory
-- Ensure SQLCipher is properly linked
-- Try resetting the database in Settings
-
-**Error**: `Global shortcuts not working`
-
-- Check if another app is using the same shortcuts
-- Restart the application
-- Check system permissions (macOS may require accessibility permissions)
-
-#### Performance Issues
-
-**Slow startup**:
-
-- Disable unnecessary startup programs
-- Ensure SSD storage for app data directory
-- Check available RAM (recommended: 4GB+)
-
-**High CPU usage**:
-
-- Check for background processes
-- Restart the application
-- Report issue with system specs
+5. **Hot reload not working**
+   - Check that the development server is running on port 1420
+   - Verify firewall settings
+   - Try restarting the development server
 
 ### Getting Help
 
-1. **Check the logs**:
+- Check the [GitHub Issues](https://github.com/sabiqsabry/Cling/issues)
+- Review the [Tauri Documentation](https://tauri.app/)
+- Check the [React Documentation](https://react.dev/)
 
-   ```bash
-   # Development logs
-   pnpm tauri:dev
+## Next Steps
 
-   # Production logs (macOS)
-   ~/Library/Logs/app.cling.desktop/
-   ```
+After setup, you can:
 
-2. **Reset to defaults**:
-   - Go to Settings → Data → Reset to Sample Data
-   - Or delete the app data directory and restart
+1. **Explore the app**: Run `pnpm tauri:dev` and explore all the features
+2. **Read the code**: Start with `src/App.tsx` and `src-tauri/src/lib.rs`
+3. **Check the documentation**: See `README.md` and `ROADMAP.md`
+4. **Set up cloud sync**: Follow the Supabase integration guide in `supabase/README.md`
 
-3. **Community support**:
-   - [GitHub Issues](https://github.com/sabiqsabry/Cling/issues)
-   - [GitHub Discussions](https://github.com/sabiqsabry/Cling/discussions)
+## Contributing
 
-## 🔄 Updates
-
-### Automatic Updates (Planned)
-
-Future versions will include automatic update checking.
-
-### Manual Updates
-
-1. Download the latest release
-2. Install over the existing version
-3. Your data will be preserved automatically
-
-## 🛡️ Security
-
-### Data Protection
-
-- **Local encryption**: SQLite with SQLCipher
-- **System integration**: Uses OS keychain for encryption keys
-- **No telemetry**: Zero data collection or tracking
-- **Open source**: Full source code transparency
-
-### Permissions
-
-#### macOS
-
-- **Accessibility**: For global shortcuts
-- **Notifications**: For reminders and focus sessions
-- **File access**: For attachments and exports
-
-#### Windows
-
-- **File system**: For app data and attachments
-- **Notifications**: For reminders and focus sessions
-
-## 📊 Performance
-
-### System Requirements
-
-**Minimum**:
-
-- CPU: Dual-core 2GHz
-- RAM: 4GB
-- Storage: 100MB free space
-- OS: macOS 10.15, Windows 10, Ubuntu 18.04
-
-**Recommended**:
-
-- CPU: Quad-core 2.5GHz+
-- RAM: 8GB+
-- Storage: 500MB+ free space
-- SSD storage for optimal performance
-
-### Optimization Tips
-
-1. **Regular maintenance**:
-   - Clear completed tasks periodically
-   - Export and archive old data
-   - Keep the app updated
-
-2. **Performance settings**:
-   - Disable unused views
-   - Limit habit tracking history
-   - Optimize attachment storage
-
----
-
-**Need more help?** Check our [FAQ](https://github.com/sabiqsabry/Cling/wiki/FAQ) or [contact support](https://github.com/sabiqsabry/Cling/issues).
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on contributing to the project.
