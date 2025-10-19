@@ -1,5 +1,13 @@
 import { useState, useEffect, useRef } from 'react'
-import { Plus, ZoomIn, ZoomOut, RotateCcw, Calendar, Clock, Tag } from 'lucide-react'
+import {
+  Plus,
+  ZoomIn,
+  ZoomOut,
+  RotateCcw,
+  Calendar,
+  Clock,
+  Tag,
+} from 'lucide-react'
 import { useUIStore } from '@/app/store/useUI'
 import { QuickAddModal } from '@/app/components/tasks/QuickAddModal'
 import { TaskEditor } from '@/app/components/tasks/TaskEditor'
@@ -48,7 +56,9 @@ export function Timeline() {
         status: 'todo',
         due_at: new Date().toISOString(),
         start_at: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(), // Tomorrow
-        end_at: new Date(Date.now() + 24 * 60 * 60 * 1000 + 2 * 60 * 60 * 1000).toISOString(), // Tomorrow + 2 hours
+        end_at: new Date(
+          Date.now() + 24 * 60 * 60 * 1000 + 2 * 60 * 60 * 1000
+        ).toISOString(), // Tomorrow + 2 hours
         duration_min: 120,
         recurrence_rrule: null,
         estimate_pomos: 2,
@@ -65,7 +75,9 @@ export function Timeline() {
         status: 'todo',
         due_at: new Date().toISOString(),
         start_at: new Date(Date.now() + 2 * 60 * 60 * 1000).toISOString(), // Today + 2 hours
-        end_at: new Date(Date.now() + 2 * 60 * 60 * 1000 + 30 * 60 * 1000).toISOString(), // Today + 2.5 hours
+        end_at: new Date(
+          Date.now() + 2 * 60 * 60 * 1000 + 30 * 60 * 1000
+        ).toISOString(), // Today + 2.5 hours
         duration_min: 30,
         recurrence_rrule: null,
         estimate_pomos: 1,
@@ -82,7 +94,9 @@ export function Timeline() {
         status: 'in-progress',
         due_at: new Date().toISOString(),
         start_at: new Date(Date.now() + 3 * 60 * 60 * 1000).toISOString(), // Today + 3 hours
-        end_at: new Date(Date.now() + 3 * 60 * 60 * 1000 + 60 * 60 * 1000).toISOString(), // Today + 4 hours
+        end_at: new Date(
+          Date.now() + 3 * 60 * 60 * 1000 + 60 * 60 * 1000
+        ).toISOString(), // Today + 4 hours
         duration_min: 60,
         recurrence_rrule: 'FREQ=WEEKLY;BYDAY=MO',
         estimate_pomos: 1,
@@ -98,8 +112,12 @@ export function Timeline() {
         priority: 1,
         status: 'todo',
         due_at: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(), // Tomorrow
-        start_at: new Date(Date.now() + 24 * 60 * 60 * 1000 + 8 * 60 * 60 * 1000).toISOString(), // Tomorrow 8 AM
-        end_at: new Date(Date.now() + 24 * 60 * 60 * 1000 + 10 * 60 * 60 * 1000).toISOString(), // Tomorrow 10 AM
+        start_at: new Date(
+          Date.now() + 24 * 60 * 60 * 1000 + 8 * 60 * 60 * 1000
+        ).toISOString(), // Tomorrow 8 AM
+        end_at: new Date(
+          Date.now() + 24 * 60 * 60 * 1000 + 10 * 60 * 60 * 1000
+        ).toISOString(), // Tomorrow 10 AM
         duration_min: 120,
         recurrence_rrule: null,
         estimate_pomos: 4,
@@ -108,7 +126,7 @@ export function Timeline() {
         updated_at: new Date().toISOString(),
       },
     ]
-    
+
     setTasks(mockTasks)
     setLoading(false)
   }, [])
@@ -118,21 +136,25 @@ export function Timeline() {
       // Create groups for different lists
       const groups = new DataSet<TimelineGroup>([
         { id: 'work', content: 'Work Tasks', className: 'work-group' },
-        { id: 'personal', content: 'Personal Tasks', className: 'personal-group' },
+        {
+          id: 'personal',
+          content: 'Personal Tasks',
+          className: 'personal-group',
+        },
         { id: 'inbox', content: 'Inbox', className: 'inbox-group' },
       ])
 
       // Convert tasks to timeline items
       const items = new DataSet<TimelineItem>(
         tasks
-          .filter(task => task.start_at)
-          .map(task => ({
+          .filter((task) => task.start_at)
+          .map((task) => ({
             id: task.id,
             content: `<div class="timeline-item">
               <div class="task-title">${task.title}</div>
               <div class="task-meta">
                 <span class="priority p${task.priority || 4}">P${task.priority || 4}</span>
-                ${task.tags?.map(tag => `<span class="tag">${tag}</span>`).join('') || ''}
+                ${task.tags?.map((tag) => `<span class="tag">${tag}</span>`).join('') || ''}
               </div>
             </div>`,
             start: new Date(task.start_at!),
@@ -172,7 +194,7 @@ export function Timeline() {
       timelineInstance.on('select', (properties) => {
         if (properties.items.length > 0) {
           const taskId = properties.items[0]
-          const task = tasks.find(t => t.id === taskId)
+          const task = tasks.find((t) => t.id === taskId)
           if (task) {
             handleEditTask(task)
           }
@@ -184,15 +206,17 @@ export function Timeline() {
         const newStart = new Date(item.start)
         const newEnd = item.end ? new Date(item.end) : undefined
 
-        setTasks(prev => prev.map(task => 
-          task.id === taskId 
-            ? { 
-                ...task, 
-                start_at: newStart.toISOString(),
-                end_at: newEnd?.toISOString() || task.end_at
-              }
-            : task
-        ))
+        setTasks((prev) =>
+          prev.map((task) =>
+            task.id === taskId
+              ? {
+                  ...task,
+                  start_at: newStart.toISOString(),
+                  end_at: newEnd?.toISOString() || task.end_at,
+                }
+              : task
+          )
+        )
 
         callback(item)
       })
@@ -208,15 +232,21 @@ export function Timeline() {
           status: 'todo',
           start_at: new Date(item.start).toISOString(),
           end_at: item.end ? new Date(item.end).toISOString() : undefined,
-          duration_min: item.end ? Math.round((new Date(item.end).getTime() - new Date(item.start).getTime()) / (1000 * 60)) : undefined,
+          duration_min: item.end
+            ? Math.round(
+                (new Date(item.end).getTime() -
+                  new Date(item.start).getTime()) /
+                  (1000 * 60)
+              )
+            : undefined,
           recurrence_rrule: null,
           estimate_pomos: null,
           tags: [],
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),
         }
-        
-        setTasks(prev => [newTask, ...prev])
+
+        setTasks((prev) => [newTask, ...prev])
         callback(item)
       })
 
@@ -229,11 +259,13 @@ export function Timeline() {
   }, [tasks])
 
   const handleToggleComplete = (taskId: string) => {
-    setTasks(prev => prev.map(task => 
-      task.id === taskId 
-        ? { ...task, status: task.status === 'done' ? 'todo' : 'done' }
-        : task
-    ))
+    setTasks((prev) =>
+      prev.map((task) =>
+        task.id === taskId
+          ? { ...task, status: task.status === 'done' ? 'todo' : 'done' }
+          : task
+      )
+    )
   }
 
   const handleEditTask = (task: Task) => {
@@ -242,16 +274,16 @@ export function Timeline() {
   }
 
   const handleDeleteTask = (taskId: string) => {
-    setTasks(prev => prev.filter(task => task.id !== taskId))
+    setTasks((prev) => prev.filter((task) => task.id !== taskId))
   }
 
   const handleSaveTask = (taskData: Partial<Task>) => {
     if (selectedTask) {
-      setTasks(prev => prev.map(task => 
-        task.id === selectedTask.id 
-          ? { ...task, ...taskData }
-          : task
-      ))
+      setTasks((prev) =>
+        prev.map((task) =>
+          task.id === selectedTask.id ? { ...task, ...taskData } : task
+        )
+      )
     } else {
       const newTask: Task = {
         id: Math.random().toString(36).substr(2, 9),
@@ -270,7 +302,7 @@ export function Timeline() {
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString(),
       }
-      setTasks(prev => [newTask, ...prev])
+      setTasks((prev) => [newTask, ...prev])
     }
     setEditorOpen(false)
     setSelectedTask(null)
@@ -294,7 +326,7 @@ export function Timeline() {
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
     }
-    setTasks(prev => [newTask, ...prev])
+    setTasks((prev) => [newTask, ...prev])
   }
 
   const handleZoomIn = () => {
@@ -404,15 +436,17 @@ export function Timeline() {
                   else handleZoomToMonth()
                 }}
                 className={cn(
-                  "px-3 py-1 text-sm rounded-md transition-colors",
-                  currentZoom === zoom.id ? "bg-background shadow-sm" : "text-muted-foreground hover:text-foreground"
+                  'px-3 py-1 text-sm rounded-md transition-colors',
+                  currentZoom === zoom.id
+                    ? 'bg-background shadow-sm'
+                    : 'text-muted-foreground hover:text-foreground'
                 )}
               >
                 {zoom.label}
               </button>
             ))}
           </div>
-          
+
           <button
             onClick={() => setQuickAddOpen(true)}
             className="flex items-center space-x-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
@@ -453,7 +487,9 @@ export function Timeline() {
 
       {/* Instructions */}
       <div className="bg-muted p-4 rounded-lg">
-        <h3 className="text-sm font-medium text-foreground mb-2">Timeline Controls</h3>
+        <h3 className="text-sm font-medium text-foreground mb-2">
+          Timeline Controls
+        </h3>
         <div className="text-sm text-muted-foreground space-y-1">
           <div>• Drag tasks to reschedule them</div>
           <div>• Resize tasks by dragging their edges</div>
@@ -486,33 +522,45 @@ export function Timeline() {
           padding: 4px 8px;
           border-radius: 4px;
         }
-        
+
         .task-title {
           font-weight: 500;
           font-size: 12px;
           line-height: 1.2;
           margin-bottom: 2px;
         }
-        
+
         .task-meta {
           display: flex;
           align-items: center;
           gap: 4px;
           flex-wrap: wrap;
         }
-        
+
         .priority {
           font-size: 10px;
           padding: 1px 4px;
           border-radius: 2px;
           font-weight: 500;
         }
-        
-        .priority.p1 { background: #ef4444; color: white; }
-        .priority.p2 { background: #f97316; color: white; }
-        .priority.p3 { background: #3b82f6; color: white; }
-        .priority.p4 { background: #6b7280; color: white; }
-        
+
+        .priority.p1 {
+          background: #ef4444;
+          color: white;
+        }
+        .priority.p2 {
+          background: #f97316;
+          color: white;
+        }
+        .priority.p3 {
+          background: #3b82f6;
+          color: white;
+        }
+        .priority.p4 {
+          background: #6b7280;
+          color: white;
+        }
+
         .tag {
           font-size: 9px;
           padding: 1px 3px;
@@ -520,17 +568,17 @@ export function Timeline() {
           color: #374151;
           border-radius: 2px;
         }
-        
+
         .work-group {
           background: #dbeafe;
           color: #1e40af;
         }
-        
+
         .personal-group {
           background: #dcfce7;
           color: #166534;
         }
-        
+
         .inbox-group {
           background: #f3f4f6;
           color: #374151;

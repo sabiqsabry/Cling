@@ -1,5 +1,13 @@
 import { useState, useEffect } from 'react'
-import { Plus, CheckCircle, Circle, Clock, Calendar, X, Maximize2 } from 'lucide-react'
+import {
+  Plus,
+  CheckCircle,
+  Circle,
+  Clock,
+  Calendar,
+  X,
+  Maximize2,
+} from 'lucide-react'
 import { Task } from '@/app/db/schema'
 import { QuickAddModal } from '@/app/components/tasks/QuickAddModal'
 import { cn } from '@/lib/utils'
@@ -70,17 +78,19 @@ export function TrayMini({ onClose, onMaximize }: TrayMiniProps) {
         updated_at: new Date().toISOString(),
       },
     ]
-    
+
     setTasks(mockTasks)
     setLoading(false)
   }, [])
 
   const handleToggleComplete = (taskId: string) => {
-    setTasks(prev => prev.map(task => 
-      task.id === taskId 
-        ? { ...task, status: task.status === 'done' ? 'todo' : 'done' }
-        : task
-    ))
+    setTasks((prev) =>
+      prev.map((task) =>
+        task.id === taskId
+          ? { ...task, status: task.status === 'done' ? 'todo' : 'done' }
+          : task
+      )
+    )
   }
 
   const handleQuickAddSubmit = (parsedTask: any) => {
@@ -101,19 +111,21 @@ export function TrayMini({ onClose, onMaximize }: TrayMiniProps) {
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
     }
-    setTasks(prev => [newTask, ...prev])
+    setTasks((prev) => [newTask, ...prev])
   }
 
-  const todayTasks = tasks.filter(task => {
+  const todayTasks = tasks.filter((task) => {
     if (!task.due_at) return false
     const taskDate = new Date(task.due_at)
     const today = new Date()
     return taskDate.toDateString() === today.toDateString()
   })
 
-  const completedToday = todayTasks.filter(task => task.status === 'done').length
+  const completedToday = todayTasks.filter(
+    (task) => task.status === 'done'
+  ).length
   const totalToday = todayTasks.length
-  const inProgressTasks = tasks.filter(task => task.status === 'in-progress')
+  const inProgressTasks = tasks.filter((task) => task.status === 'in-progress')
 
   if (loading) {
     return (
@@ -156,11 +168,15 @@ export function TrayMini({ onClose, onMaximize }: TrayMiniProps) {
         <div className="p-3 border-b border-border">
           <div className="grid grid-cols-2 gap-3">
             <div className="text-center">
-              <div className="text-lg font-bold text-foreground">{completedToday}</div>
+              <div className="text-lg font-bold text-foreground">
+                {completedToday}
+              </div>
               <div className="text-xs text-muted-foreground">Done Today</div>
             </div>
             <div className="text-center">
-              <div className="text-lg font-bold text-blue-500">{inProgressTasks.length}</div>
+              <div className="text-lg font-bold text-blue-500">
+                {inProgressTasks.length}
+              </div>
               <div className="text-xs text-muted-foreground">In Progress</div>
             </div>
           </div>
@@ -181,16 +197,18 @@ export function TrayMini({ onClose, onMaximize }: TrayMiniProps) {
         <div className="flex-1 overflow-y-auto p-3">
           <div className-flex items-center space-x-2 mb-3>
             <Calendar className="h-4 w-4 text-muted-foreground" />
-            <h3 className="text-sm font-medium text-foreground">Recent Tasks</h3>
+            <h3 className="text-sm font-medium text-foreground">
+              Recent Tasks
+            </h3>
           </div>
-          
+
           <div className="space-y-2">
             {todayTasks.slice(0, 3).map((task) => (
               <div
                 key={task.id}
                 className={cn(
-                  "flex items-center space-x-2 p-2 rounded-md hover:bg-muted/50 transition-colors cursor-pointer",
-                  task.status === 'done' && "opacity-60"
+                  'flex items-center space-x-2 p-2 rounded-md hover:bg-muted/50 transition-colors cursor-pointer',
+                  task.status === 'done' && 'opacity-60'
                 )}
                 onClick={() => handleToggleComplete(task.id)}
               >
@@ -201,25 +219,30 @@ export function TrayMini({ onClose, onMaximize }: TrayMiniProps) {
                     <Circle className="h-3 w-3" />
                   )}
                 </button>
-                
+
                 <div className="flex-1 min-w-0">
-                  <div className={cn(
-                    "text-xs font-medium truncate",
-                    task.status === 'done' && "line-through text-muted-foreground"
-                  )}>
+                  <div
+                    className={cn(
+                      'text-xs font-medium truncate',
+                      task.status === 'done' &&
+                        'line-through text-muted-foreground'
+                    )}
+                  >
                     {task.title}
                   </div>
                 </div>
 
                 <div className="flex items-center space-x-1">
                   {task.priority && (
-                    <div className={cn(
-                      "text-xs px-1 py-0.5 rounded-full font-medium",
-                      task.priority === 1 && "bg-red-100 text-red-700",
-                      task.priority === 2 && "bg-orange-100 text-orange-700",
-                      task.priority === 3 && "bg-blue-100 text-blue-700",
-                      task.priority === 4 && "bg-gray-100 text-gray-700"
-                    )}>
+                    <div
+                      className={cn(
+                        'text-xs px-1 py-0.5 rounded-full font-medium',
+                        task.priority === 1 && 'bg-red-100 text-red-700',
+                        task.priority === 2 && 'bg-orange-100 text-orange-700',
+                        task.priority === 3 && 'bg-blue-100 text-blue-700',
+                        task.priority === 4 && 'bg-gray-100 text-gray-700'
+                      )}
+                    >
                       P{task.priority}
                     </div>
                   )}
@@ -231,7 +254,9 @@ export function TrayMini({ onClose, onMaximize }: TrayMiniProps) {
           {todayTasks.length === 0 && (
             <div className="text-center py-4">
               <Calendar className="h-6 w-6 text-muted-foreground mx-auto mb-2" />
-              <div className="text-xs text-muted-foreground">No tasks today</div>
+              <div className="text-xs text-muted-foreground">
+                No tasks today
+              </div>
             </div>
           )}
         </div>

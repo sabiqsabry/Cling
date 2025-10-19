@@ -41,20 +41,26 @@ export function useURLSchemes() {
 
     const handleAddTask = (params: Record<string, string>) => {
       const { title, description, priority, due_date, tags } = params
-      
+
       // TODO: Implement task creation with pre-filled data
       // For now, just open the quick add modal
       setQuickAddOpen(true)
-      
+
       // If title is provided, we could pre-fill the quick add modal
       if (title) {
-        console.log('Pre-filling task with:', { title, description, priority, due_date, tags })
+        console.log('Pre-filling task with:', {
+          title,
+          description,
+          priority,
+          due_date,
+          tags,
+        })
       }
     }
 
     const handleShow = (params: Record<string, string>) => {
       const { view, id } = params
-      
+
       switch (view) {
         case 'dashboard':
           setCurrentView('dashboard')
@@ -97,7 +103,7 @@ export function useURLSchemes() {
     const handleSearch = (params: Record<string, string>) => {
       const { q, query } = params
       const searchQuery = q || query || ''
-      
+
       if (searchQuery) {
         setSearchQuery(searchQuery)
         setCurrentView('list') // Switch to list view to show search results
@@ -110,47 +116,56 @@ export function useURLSchemes() {
       handleURLScheme(event.detail.url)
     }
 
-    window.addEventListener('url-scheme', handleCustomURLScheme as EventListener)
+    window.addEventListener(
+      'url-scheme',
+      handleCustomURLScheme as EventListener
+    )
 
     // Example usage for testing:
-    // window.dispatchEvent(new CustomEvent('url-scheme', { 
-    //   detail: { url: 'cling://add_task?title=New Task&priority=2' } 
+    // window.dispatchEvent(new CustomEvent('url-scheme', {
+    //   detail: { url: 'cling://add_task?title=New Task&priority=2' }
     // }))
 
     return () => {
-      window.removeEventListener('url-scheme', handleCustomURLScheme as EventListener)
+      window.removeEventListener(
+        'url-scheme',
+        handleCustomURLScheme as EventListener
+      )
     }
   }, [setQuickAddOpen, setCurrentView, setSearchQuery])
 
   // Utility functions for external use
-  const createTaskURL = (title: string, options?: {
-    description?: string
-    priority?: number
-    due_date?: string
-    tags?: string[]
-  }) => {
+  const createTaskURL = (
+    title: string,
+    options?: {
+      description?: string
+      priority?: number
+      due_date?: string
+      tags?: string[]
+    }
+  ) => {
     const params = new URLSearchParams()
     params.set('title', title)
-    
+
     if (options?.description) params.set('description', options.description)
     if (options?.priority) params.set('priority', options.priority.toString())
     if (options?.due_date) params.set('due_date', options.due_date)
     if (options?.tags) params.set('tags', options.tags.join(','))
-    
+
     return `cling://add_task?${params.toString()}`
   }
 
   const showViewURL = (view: string, id?: string) => {
     const params = new URLSearchParams()
     if (id) params.set('id', id)
-    
+
     return `cling://show/${view}${params.toString() ? '?' + params.toString() : ''}`
   }
 
   const searchURL = (query: string) => {
     const params = new URLSearchParams()
     params.set('q', query)
-    
+
     return `cling://search?${params.toString()}`
   }
 

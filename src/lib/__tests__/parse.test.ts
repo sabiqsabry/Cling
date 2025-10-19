@@ -4,7 +4,7 @@ import { parseTaskInput, ParsedTask } from '../parse'
 describe('parseTaskInput', () => {
   it('should parse basic task title', () => {
     const result = parseTaskInput('Buy groceries')
-    
+
     expect(result.title).toBe('Buy groceries')
     expect(result.tags).toEqual([])
     expect(result.priority).toBeUndefined()
@@ -14,7 +14,7 @@ describe('parseTaskInput', () => {
 
   it('should parse task with tags', () => {
     const result = parseTaskInput('Review project proposal #work #urgent')
-    
+
     expect(result.title).toBe('Review project proposal')
     expect(result.tags).toEqual(['work', 'urgent'])
     expect(result.chips).toHaveLength(2)
@@ -24,7 +24,7 @@ describe('parseTaskInput', () => {
 
   it('should parse task with priority', () => {
     const result = parseTaskInput('Fix critical bug P1')
-    
+
     expect(result.title).toBe('Fix critical bug')
     expect(result.priority).toBe(1)
     expect(result.chips).toHaveLength(1)
@@ -34,7 +34,7 @@ describe('parseTaskInput', () => {
 
   it('should parse task with date', () => {
     const result = parseTaskInput('Submit report tomorrow')
-    
+
     expect(result.title).toBe('Submit report')
     expect(result.startAt).toBeDefined()
     expect(result.chips).toHaveLength(1)
@@ -43,7 +43,7 @@ describe('parseTaskInput', () => {
 
   it('should parse task with time', () => {
     const result = parseTaskInput('Meeting at 3pm')
-    
+
     expect(result.title).toBe('Meeting')
     expect(result.startAt).toBeDefined()
     expect(result.chips).toHaveLength(1)
@@ -52,7 +52,7 @@ describe('parseTaskInput', () => {
 
   it('should parse task with duration', () => {
     const result = parseTaskInput('Workout for 30 minutes')
-    
+
     expect(result.title).toBe('Workout')
     expect(result.duration).toBe(30)
     expect(result.chips).toHaveLength(1)
@@ -60,8 +60,10 @@ describe('parseTaskInput', () => {
   })
 
   it('should parse complex task with multiple elements', () => {
-    const result = parseTaskInput('Submit project proposal tomorrow 3pm #work P1 2 hours')
-    
+    const result = parseTaskInput(
+      'Submit project proposal tomorrow 3pm #work P1 2 hours'
+    )
+
     expect(result.title).toBe('Submit project proposal')
     expect(result.tags).toEqual(['work'])
     expect(result.priority).toBe(1)
@@ -72,15 +74,15 @@ describe('parseTaskInput', () => {
 
   it('should parse recurrence patterns', () => {
     const result = parseTaskInput('Weekly team meeting every Monday')
-    
+
     expect(result.title).toBe('Weekly team meeting')
     expect(result.recurrence).toBeDefined()
-    expect(result.chips.some(chip => chip.type === 'recurrence')).toBe(true)
+    expect(result.chips.some((chip) => chip.type === 'recurrence')).toBe(true)
   })
 
   it('should handle empty input', () => {
     const result = parseTaskInput('')
-    
+
     expect(result.title).toBe('')
     expect(result.tags).toEqual([])
     expect(result.chips).toHaveLength(0)
@@ -88,7 +90,7 @@ describe('parseTaskInput', () => {
 
   it('should handle input with only special characters', () => {
     const result = parseTaskInput('#work P1 tomorrow 3pm')
-    
+
     expect(result.title).toBe('')
     expect(result.tags).toEqual(['work'])
     expect(result.priority).toBe(1)
@@ -97,28 +99,28 @@ describe('parseTaskInput', () => {
 
   it('should preserve description when provided', () => {
     const result = parseTaskInput('Buy groceries - Get milk, bread, and eggs')
-    
+
     expect(result.title).toBe('Buy groceries')
     expect(result.description).toBe('Get milk, bread, and eggs')
   })
 
   it('should handle multiple priorities and use the last one', () => {
     const result = parseTaskInput('Task P1 P2 P3')
-    
+
     expect(result.title).toBe('Task')
     expect(result.priority).toBe(3)
   })
 
   it('should handle case insensitive tags', () => {
     const result = parseTaskInput('Task #WORK #Personal')
-    
+
     expect(result.title).toBe('Task')
     expect(result.tags).toEqual(['work', 'personal'])
   })
 
   it('should handle mixed case priority', () => {
     const result = parseTaskInput('Task p1 P2 p3')
-    
+
     expect(result.title).toBe('Task')
     expect(result.priority).toBe(3)
   })

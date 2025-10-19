@@ -12,7 +12,8 @@ import interactionPlugin from '@fullcalendar/interaction'
 import { EventInput } from '@fullcalendar/core'
 
 export function Calendar() {
-  const { setQuickAddOpen, quickAddOpen, calendarView, setCalendarView } = useUIStore()
+  const { setQuickAddOpen, quickAddOpen, calendarView, setCalendarView } =
+    useUIStore()
   const [tasks, setTasks] = useState<Task[]>([])
   const [selectedTask, setSelectedTask] = useState<Task | null>(null)
   const [editorOpen, setEditorOpen] = useState(false)
@@ -31,7 +32,9 @@ export function Calendar() {
         status: 'todo',
         due_at: new Date().toISOString(),
         start_at: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(), // Tomorrow
-        end_at: new Date(Date.now() + 24 * 60 * 60 * 1000 + 2 * 60 * 60 * 1000).toISOString(), // Tomorrow + 2 hours
+        end_at: new Date(
+          Date.now() + 24 * 60 * 60 * 1000 + 2 * 60 * 60 * 1000
+        ).toISOString(), // Tomorrow + 2 hours
         duration_min: 120,
         recurrence_rrule: null,
         estimate_pomos: 2,
@@ -48,7 +51,9 @@ export function Calendar() {
         status: 'todo',
         due_at: new Date().toISOString(),
         start_at: new Date(Date.now() + 2 * 60 * 60 * 1000).toISOString(), // Today + 2 hours
-        end_at: new Date(Date.now() + 2 * 60 * 60 * 1000 + 30 * 60 * 1000).toISOString(), // Today + 2.5 hours
+        end_at: new Date(
+          Date.now() + 2 * 60 * 60 * 1000 + 30 * 60 * 1000
+        ).toISOString(), // Today + 2.5 hours
         duration_min: 30,
         recurrence_rrule: null,
         estimate_pomos: 1,
@@ -65,7 +70,9 @@ export function Calendar() {
         status: 'in-progress',
         due_at: new Date().toISOString(),
         start_at: new Date(Date.now() + 3 * 60 * 60 * 1000).toISOString(), // Today + 3 hours
-        end_at: new Date(Date.now() + 3 * 60 * 60 * 1000 + 60 * 60 * 1000).toISOString(), // Today + 4 hours
+        end_at: new Date(
+          Date.now() + 3 * 60 * 60 * 1000 + 60 * 60 * 1000
+        ).toISOString(), // Today + 4 hours
         duration_min: 60,
         recurrence_rrule: 'FREQ=WEEKLY;BYDAY=MO',
         estimate_pomos: 1,
@@ -81,8 +88,12 @@ export function Calendar() {
         priority: 1,
         status: 'todo',
         due_at: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(), // Tomorrow
-        start_at: new Date(Date.now() + 24 * 60 * 60 * 1000 + 8 * 60 * 60 * 1000).toISOString(), // Tomorrow 8 AM
-        end_at: new Date(Date.now() + 24 * 60 * 60 * 1000 + 10 * 60 * 60 * 1000).toISOString(), // Tomorrow 10 AM
+        start_at: new Date(
+          Date.now() + 24 * 60 * 60 * 1000 + 8 * 60 * 60 * 1000
+        ).toISOString(), // Tomorrow 8 AM
+        end_at: new Date(
+          Date.now() + 24 * 60 * 60 * 1000 + 10 * 60 * 60 * 1000
+        ).toISOString(), // Tomorrow 10 AM
         duration_min: 120,
         recurrence_rrule: null,
         estimate_pomos: 4,
@@ -91,17 +102,19 @@ export function Calendar() {
         updated_at: new Date().toISOString(),
       },
     ]
-    
+
     setTasks(mockTasks)
     setLoading(false)
   }, [])
 
   const handleToggleComplete = (taskId: string) => {
-    setTasks(prev => prev.map(task => 
-      task.id === taskId 
-        ? { ...task, status: task.status === 'done' ? 'todo' : 'done' }
-        : task
-    ))
+    setTasks((prev) =>
+      prev.map((task) =>
+        task.id === taskId
+          ? { ...task, status: task.status === 'done' ? 'todo' : 'done' }
+          : task
+      )
+    )
   }
 
   const handleEditTask = (task: Task) => {
@@ -110,16 +123,16 @@ export function Calendar() {
   }
 
   const handleDeleteTask = (taskId: string) => {
-    setTasks(prev => prev.filter(task => task.id !== taskId))
+    setTasks((prev) => prev.filter((task) => task.id !== taskId))
   }
 
   const handleSaveTask = (taskData: Partial<Task>) => {
     if (selectedTask) {
-      setTasks(prev => prev.map(task => 
-        task.id === selectedTask.id 
-          ? { ...task, ...taskData }
-          : task
-      ))
+      setTasks((prev) =>
+        prev.map((task) =>
+          task.id === selectedTask.id ? { ...task, ...taskData } : task
+        )
+      )
     } else {
       const newTask: Task = {
         id: Math.random().toString(36).substr(2, 9),
@@ -138,7 +151,7 @@ export function Calendar() {
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString(),
       }
-      setTasks(prev => [newTask, ...prev])
+      setTasks((prev) => [newTask, ...prev])
     }
     setEditorOpen(false)
     setSelectedTask(null)
@@ -162,18 +175,20 @@ export function Calendar() {
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
     }
-    setTasks(prev => [newTask, ...prev])
+    setTasks((prev) => [newTask, ...prev])
   }
 
   // Convert tasks to FullCalendar events
   const events: EventInput[] = tasks
-    .filter(task => task.start_at)
-    .map(task => ({
+    .filter((task) => task.start_at)
+    .map((task) => ({
       id: task.id,
       title: task.title,
       start: task.start_at!,
       end: task.end_at || undefined,
-      allDay: !task.start_at?.includes('T') || task.duration_min && task.duration_min >= 24 * 60,
+      allDay:
+        !task.start_at?.includes('T') ||
+        (task.duration_min && task.duration_min >= 24 * 60),
       backgroundColor: getEventColor(task.priority),
       borderColor: getEventColor(task.priority),
       extendedProps: {
@@ -187,11 +202,16 @@ export function Calendar() {
 
   const getEventColor = (priority?: number) => {
     switch (priority) {
-      case 1: return '#ef4444' // red
-      case 2: return '#f97316' // orange
-      case 3: return '#3b82f6' // blue
-      case 4: return '#6b7280' // gray
-      default: return '#6b7280'
+      case 1:
+        return '#ef4444' // red
+      case 2:
+        return '#f97316' // orange
+      case 3:
+        return '#3b82f6' // blue
+      case 4:
+        return '#6b7280' // gray
+      default:
+        return '#6b7280'
     }
   }
 
@@ -216,15 +236,17 @@ export function Calendar() {
     const newStart = dropInfo.event.start
     const newEnd = dropInfo.event.end
 
-    setTasks(prev => prev.map(task => 
-      task.id === taskId 
-        ? { 
-            ...task, 
-            start_at: newStart.toISOString(),
-            end_at: newEnd?.toISOString() || task.end_at
-          }
-        : task
-    ))
+    setTasks((prev) =>
+      prev.map((task) =>
+        task.id === taskId
+          ? {
+              ...task,
+              start_at: newStart.toISOString(),
+              end_at: newEnd?.toISOString() || task.end_at,
+            }
+          : task
+      )
+    )
   }
 
   const handleEventResize = (resizeInfo: any) => {
@@ -232,15 +254,17 @@ export function Calendar() {
     const newStart = resizeInfo.event.start
     const newEnd = resizeInfo.event.end
 
-    setTasks(prev => prev.map(task => 
-      task.id === taskId 
-        ? { 
-            ...task, 
-            start_at: newStart.toISOString(),
-            end_at: newEnd?.toISOString() || task.end_at
-          }
-        : task
-    ))
+    setTasks((prev) =>
+      prev.map((task) =>
+        task.id === taskId
+          ? {
+              ...task,
+              start_at: newStart.toISOString(),
+              end_at: newEnd?.toISOString() || task.end_at,
+            }
+          : task
+      )
+    )
   }
 
   if (loading) {
@@ -276,15 +300,17 @@ export function Calendar() {
                   calendarRef.current?.changeView(view.id)
                 }}
                 className={cn(
-                  "px-3 py-1 text-sm rounded-md transition-colors",
-                  calendarView === view.id ? "bg-background shadow-sm" : "text-muted-foreground hover:text-foreground"
+                  'px-3 py-1 text-sm rounded-md transition-colors',
+                  calendarView === view.id
+                    ? 'bg-background shadow-sm'
+                    : 'text-muted-foreground hover:text-foreground'
                 )}
               >
                 {view.label}
               </button>
             ))}
           </div>
-          
+
           <button
             onClick={() => setQuickAddOpen(true)}
             className="flex items-center space-x-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
@@ -297,7 +323,9 @@ export function Calendar() {
 
       {/* Legend */}
       <div className="bg-card p-4 rounded-lg border border-border">
-        <h3 className="text-sm font-medium text-foreground mb-3">Priority Legend</h3>
+        <h3 className="text-sm font-medium text-foreground mb-3">
+          Priority Legend
+        </h3>
         <div className="flex items-center space-x-6">
           <div className="flex items-center space-x-2">
             <div className="w-3 h-3 rounded-full bg-red-500" />
@@ -326,9 +354,15 @@ export function Calendar() {
           headerToolbar={{
             left: 'prev,next today',
             center: 'title',
-            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            right: 'dayGridMonth,timeGridWeek,timeGridDay',
           }}
-          initialView={calendarView === 'month' ? 'dayGridMonth' : calendarView === 'week' ? 'timeGridWeek' : 'timeGridDay'}
+          initialView={
+            calendarView === 'month'
+              ? 'dayGridMonth'
+              : calendarView === 'week'
+                ? 'timeGridWeek'
+                : 'timeGridDay'
+          }
           editable={true}
           selectable={true}
           selectMirror={true}
@@ -344,12 +378,12 @@ export function Calendar() {
           eventTimeFormat={{
             hour: 'numeric',
             minute: '2-digit',
-            meridiem: 'short'
+            meridiem: 'short',
           }}
           slotLabelFormat={{
             hour: 'numeric',
             minute: '2-digit',
-            meridiem: 'short'
+            meridiem: 'short',
           }}
           nowIndicator={true}
           scrollTime="08:00:00"

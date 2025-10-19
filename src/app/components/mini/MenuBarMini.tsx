@@ -52,17 +52,19 @@ export function MenuBarMini({ onClose }: MenuBarMiniProps) {
         updated_at: new Date().toISOString(),
       },
     ]
-    
+
     setTasks(mockTasks)
     setLoading(false)
   }, [])
 
   const handleToggleComplete = (taskId: string) => {
-    setTasks(prev => prev.map(task => 
-      task.id === taskId 
-        ? { ...task, status: task.status === 'done' ? 'todo' : 'done' }
-        : task
-    ))
+    setTasks((prev) =>
+      prev.map((task) =>
+        task.id === taskId
+          ? { ...task, status: task.status === 'done' ? 'todo' : 'done' }
+          : task
+      )
+    )
   }
 
   const handleQuickAddSubmit = (parsedTask: any) => {
@@ -83,17 +85,19 @@ export function MenuBarMini({ onClose }: MenuBarMiniProps) {
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
     }
-    setTasks(prev => [newTask, ...prev])
+    setTasks((prev) => [newTask, ...prev])
   }
 
-  const todayTasks = tasks.filter(task => {
+  const todayTasks = tasks.filter((task) => {
     if (!task.due_at) return false
     const taskDate = new Date(task.due_at)
     const today = new Date()
     return taskDate.toDateString() === today.toDateString()
   })
 
-  const completedToday = todayTasks.filter(task => task.status === 'done').length
+  const completedToday = todayTasks.filter(
+    (task) => task.status === 'done'
+  ).length
   const totalToday = todayTasks.length
 
   if (loading) {
@@ -144,8 +148,8 @@ export function MenuBarMini({ onClose }: MenuBarMiniProps) {
               <div
                 key={task.id}
                 className={cn(
-                  "flex items-center space-x-2 p-2 rounded-md hover:bg-muted/50 transition-colors cursor-pointer",
-                  task.status === 'done' && "opacity-60"
+                  'flex items-center space-x-2 p-2 rounded-md hover:bg-muted/50 transition-colors cursor-pointer',
+                  task.status === 'done' && 'opacity-60'
                 )}
                 onClick={() => handleToggleComplete(task.id)}
               >
@@ -156,12 +160,15 @@ export function MenuBarMini({ onClose }: MenuBarMiniProps) {
                     <Circle className="h-4 w-4" />
                   )}
                 </button>
-                
+
                 <div className="flex-1 min-w-0">
-                  <div className={cn(
-                    "text-sm font-medium truncate",
-                    task.status === 'done' && "line-through text-muted-foreground"
-                  )}>
+                  <div
+                    className={cn(
+                      'text-sm font-medium truncate',
+                      task.status === 'done' &&
+                        'line-through text-muted-foreground'
+                    )}
+                  >
                     {task.title}
                   </div>
                   {task.description && (
@@ -173,13 +180,15 @@ export function MenuBarMini({ onClose }: MenuBarMiniProps) {
 
                 <div className="flex items-center space-x-1">
                   {task.priority && (
-                    <div className={cn(
-                      "text-xs px-1.5 py-0.5 rounded-full font-medium",
-                      task.priority === 1 && "bg-red-100 text-red-700",
-                      task.priority === 2 && "bg-orange-100 text-orange-700",
-                      task.priority === 3 && "bg-blue-100 text-blue-700",
-                      task.priority === 4 && "bg-gray-100 text-gray-700"
-                    )}>
+                    <div
+                      className={cn(
+                        'text-xs px-1.5 py-0.5 rounded-full font-medium',
+                        task.priority === 1 && 'bg-red-100 text-red-700',
+                        task.priority === 2 && 'bg-orange-100 text-orange-700',
+                        task.priority === 3 && 'bg-blue-100 text-blue-700',
+                        task.priority === 4 && 'bg-gray-100 text-gray-700'
+                      )}
+                    >
                       P{task.priority}
                     </div>
                   )}
@@ -189,7 +198,9 @@ export function MenuBarMini({ onClose }: MenuBarMiniProps) {
           ) : (
             <div className="text-center py-8">
               <Calendar className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
-              <div className="text-sm text-muted-foreground">No tasks for today</div>
+              <div className="text-sm text-muted-foreground">
+                No tasks for today
+              </div>
               <div className="text-xs text-muted-foreground mt-1">
                 Add a task to get started
               </div>

@@ -1,13 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
-import { 
-  X, 
-  Calendar, 
-  Clock, 
-  Tag, 
-  Flag, 
-  Repeat,
-  Timer
-} from 'lucide-react'
+import { X, Calendar, Clock, Tag, Flag, Repeat, Timer } from 'lucide-react'
 import { parseTaskInput, ParsedTask, ParsedChip } from '@/lib/parse'
 import { cn } from '@/lib/utils'
 
@@ -17,7 +9,11 @@ interface QuickAddModalProps {
   onSubmit: (task: ParsedTask) => void
 }
 
-export function QuickAddModal({ isOpen, onClose, onSubmit }: QuickAddModalProps) {
+export function QuickAddModal({
+  isOpen,
+  onClose,
+  onSubmit,
+}: QuickAddModalProps) {
   const [input, setInput] = useState('')
   const [parsedTask, setParsedTask] = useState<ParsedTask | null>(null)
   const inputRef = useRef<HTMLInputElement>(null)
@@ -59,7 +55,9 @@ export function QuickAddModal({ isOpen, onClose, onSubmit }: QuickAddModalProps)
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
       <div className="bg-card border border-border rounded-lg shadow-lg w-full max-w-2xl mx-4">
         <div className="flex items-center justify-between p-4 border-b border-border">
-          <h2 className="text-lg font-semibold text-foreground">Quick Add Task</h2>
+          <h2 className="text-lg font-semibold text-foreground">
+            Quick Add Task
+          </h2>
           <button
             onClick={onClose}
             className="text-muted-foreground hover:text-foreground transition-colors"
@@ -95,13 +93,17 @@ export function QuickAddModal({ isOpen, onClose, onSubmit }: QuickAddModalProps)
             {/* Preview */}
             {parsedTask && (
               <div className="bg-muted p-4 rounded-lg">
-                <h4 className="text-sm font-medium text-foreground mb-2">Preview:</h4>
+                <h4 className="text-sm font-medium text-foreground mb-2">
+                  Preview:
+                </h4>
                 <div className="space-y-2 text-sm">
                   <div>
                     <span className="text-muted-foreground">Title: </span>
-                    <span className="text-foreground">{parsedTask.title || 'Untitled task'}</span>
+                    <span className="text-foreground">
+                      {parsedTask.title || 'Untitled task'}
+                    </span>
                   </div>
-                  
+
                   {parsedTask.startAt && (
                     <div>
                       <span className="text-muted-foreground">Start: </span>
@@ -110,7 +112,7 @@ export function QuickAddModal({ isOpen, onClose, onSubmit }: QuickAddModalProps)
                       </span>
                     </div>
                   )}
-                  
+
                   {parsedTask.endAt && (
                     <div>
                       <span className="text-muted-foreground">End: </span>
@@ -119,25 +121,33 @@ export function QuickAddModal({ isOpen, onClose, onSubmit }: QuickAddModalProps)
                       </span>
                     </div>
                   )}
-                  
+
                   {parsedTask.priority && (
                     <div>
                       <span className="text-muted-foreground">Priority: </span>
-                      <span className="text-foreground">P{parsedTask.priority}</span>
+                      <span className="text-foreground">
+                        P{parsedTask.priority}
+                      </span>
                     </div>
                   )}
-                  
+
                   {parsedTask.tags.length > 0 && (
                     <div>
                       <span className="text-muted-foreground">Tags: </span>
-                      <span className="text-foreground">{parsedTask.tags.join(', ')}</span>
+                      <span className="text-foreground">
+                        {parsedTask.tags.join(', ')}
+                      </span>
                     </div>
                   )}
-                  
+
                   {parsedTask.recurrence && (
                     <div>
-                      <span className="text-muted-foreground">Recurrence: </span>
-                      <span className="text-foreground">{parsedTask.recurrence}</span>
+                      <span className="text-muted-foreground">
+                        Recurrence:{' '}
+                      </span>
+                      <span className="text-foreground">
+                        {parsedTask.recurrence}
+                      </span>
                     </div>
                   )}
                 </div>
@@ -212,10 +222,12 @@ function Chip({ chip }: ChipProps) {
   }
 
   return (
-    <div className={cn(
-      "inline-flex items-center px-2 py-1 rounded-full text-xs font-medium",
-      getChipColor(chip.type)
-    )}>
+    <div
+      className={cn(
+        'inline-flex items-center px-2 py-1 rounded-full text-xs font-medium',
+        getChipColor(chip.type)
+      )}
+    >
       {getChipIcon(chip.type)}
       <span className="ml-1">{chip.text}</span>
     </div>

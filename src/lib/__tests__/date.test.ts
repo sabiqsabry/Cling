@@ -1,11 +1,11 @@
 import { describe, it, expect } from 'vitest'
-import { 
-  formatDate, 
-  isDateToday, 
-  isDateTomorrow, 
+import {
+  formatDate,
+  isDateToday,
+  isDateTomorrow,
   isDateYesterday,
   getRelativeDateLabel,
-  getDateRangeLabel
+  getDateRangeLabel,
 } from '../date'
 
 describe('date utilities', () => {

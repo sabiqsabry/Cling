@@ -7,20 +7,20 @@ vi.mock('@/app/store/useUI', () => ({
     setQuickAddOpen: vi.fn(),
     setCurrentView: vi.fn(),
     setSearchQuery: vi.fn(),
-  })
+  }),
 }))
 
 describe('useURLSchemes', () => {
   it('should create task URL correctly', () => {
     const { createTaskURL } = useURLSchemes()
-    
+
     const url = createTaskURL('Test task', {
       description: 'Test description',
       priority: 2,
       due_date: '2024-01-15',
-      tags: ['work', 'urgent']
+      tags: ['work', 'urgent'],
     })
-    
+
     expect(url).toContain('cling://add_task')
     expect(url).toContain('title=Test%20task')
     expect(url).toContain('description=Test%20description')
@@ -31,17 +31,17 @@ describe('useURLSchemes', () => {
 
   it('should create show view URL correctly', () => {
     const { showViewURL } = useURLSchemes()
-    
+
     const url = showViewURL('today')
     expect(url).toBe('cling://show/today')
-    
+
     const urlWithId = showViewURL('task', '123')
     expect(urlWithId).toBe('cling://show/task?id=123')
   })
 
   it('should create search URL correctly', () => {
     const { searchURL } = useURLSchemes()
-    
+
     const url = searchURL('project review')
     expect(url).toContain('cling://search')
     expect(url).toContain('q=project%20review')
