@@ -8,7 +8,12 @@ export function useThemeSync() {
 
   // Sync theme preference with Supabase when authenticated
   useEffect(() => {
-    if (isAuthenticated && profile && profile.theme_preference && profile.theme_preference !== theme) {
+    if (
+      isAuthenticated &&
+      profile &&
+      profile.theme_preference &&
+      profile.theme_preference !== theme
+    ) {
       // Load theme from profile if different from current
       setTheme(profile.theme_preference as any)
     }

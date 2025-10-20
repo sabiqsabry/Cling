@@ -1,28 +1,46 @@
 import { useState } from 'react'
-import { User, Mail, Calendar, Globe, Camera, Save, LogOut, Trash2, Key, AlertTriangle } from 'lucide-react'
+import {
+  User,
+  Mail,
+  Calendar,
+  Globe,
+  Camera,
+  Save,
+  LogOut,
+  Trash2,
+  Key,
+  AlertTriangle,
+} from 'lucide-react'
 import { useAuthStore } from '@/app/store/useAuth'
 import { useThemeSync } from '@/hooks/useTheme'
 import { Button } from '@/app/components/ui/button'
 import { Input } from '@/app/components/ui/input'
 import { Label } from '@/app/components/ui/label'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/app/components/ui/card'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/app/components/ui/card'
 import { Alert, AlertDescription } from '@/app/components/ui/alert'
 import { cn } from '@/lib/utils'
 
 export function Profile() {
   const { user, profile, logout, updateProfile, isLoading } = useAuthStore()
   const { theme, setTheme } = useThemeSync()
-  
+
   const [editing, setEditing] = useState(false)
   const [saving, setSaving] = useState(false)
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
   const [showPasswordChange, setShowPasswordChange] = useState(false)
-  
+
   const [formData, setFormData] = useState({
     full_name: profile?.full_name || '',
-    timezone: profile?.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone,
+    timezone:
+      profile?.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone,
   })
-  
+
   const [passwordData, setPasswordData] = useState({
     currentPassword: '',
     newPassword: '',
@@ -46,14 +64,18 @@ export function Profile() {
       alert('New passwords do not match')
       return
     }
-    
+
     setSaving(true)
     try {
       // TODO: Implement password change with Supabase
       console.log('Change password:', passwordData)
       alert('Password changed successfully')
       setShowPasswordChange(false)
-      setPasswordData({ currentPassword: '', newPassword: '', confirmPassword: '' })
+      setPasswordData({
+        currentPassword: '',
+        newPassword: '',
+        confirmPassword: '',
+      })
     } catch (error) {
       console.error('Error changing password:', error)
       alert('Failed to change password')
@@ -126,7 +148,9 @@ export function Profile() {
                     <Input
                       id="full_name"
                       value={formData.full_name}
-                      onChange={(e) => setFormData({ ...formData, full_name: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({ ...formData, full_name: e.target.value })
+                      }
                       placeholder="Enter your full name"
                     />
                   </div>
@@ -147,7 +171,9 @@ export function Profile() {
                     <Input
                       id="timezone"
                       value={formData.timezone}
-                      onChange={(e) => setFormData({ ...formData, timezone: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({ ...formData, timezone: e.target.value })
+                      }
                     />
                   </div>
                   <div className="flex space-x-2">
@@ -178,20 +204,24 @@ export function Profile() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                     <div className="flex items-center space-x-2">
                       <Calendar className="h-4 w-4 text-muted-foreground" />
-                      <span className="text-muted-foreground">Member since:</span>
+                      <span className="text-muted-foreground">
+                        Member since:
+                      </span>
                       <span className="text-foreground">
-                        {profile?.created_at ? new Date(profile.created_at).toLocaleDateString() : 'Unknown'}
+                        {profile?.created_at
+                          ? new Date(profile.created_at).toLocaleDateString()
+                          : 'Unknown'}
                       </span>
                     </div>
                     <div className="flex items-center space-x-2">
                       <Globe className="h-4 w-4 text-muted-foreground" />
                       <span className="text-muted-foreground">Timezone:</span>
-                      <span className="text-foreground">{profile?.timezone || 'UTC'}</span>
+                      <span className="text-foreground">
+                        {profile?.timezone || 'UTC'}
+                      </span>
                     </div>
                   </div>
-                  <Button onClick={() => setEditing(true)}>
-                    Edit Profile
-                  </Button>
+                  <Button onClick={() => setEditing(true)}>Edit Profile</Button>
                 </div>
               )}
             </CardContent>
@@ -204,9 +234,7 @@ export function Profile() {
                 <Globe className="h-5 w-5" />
                 <span>App Preferences</span>
               </CardTitle>
-              <CardDescription>
-                Customize your app experience
-              </CardDescription>
+              <CardDescription>Customize your app experience</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
@@ -221,14 +249,16 @@ export function Profile() {
                       key={themeOption.id}
                       onClick={() => setTheme(themeOption.id as any)}
                       className={cn(
-                        "flex flex-col items-center space-y-2 p-3 rounded-lg border transition-colors",
+                        'flex flex-col items-center space-y-2 p-3 rounded-lg border transition-colors',
                         theme === themeOption.id
-                          ? "border-primary bg-primary/5"
-                          : "border-border hover:border-primary/50"
+                          ? 'border-primary bg-primary/5'
+                          : 'border-border hover:border-primary/50'
                       )}
                     >
                       <span className="text-lg">{themeOption.icon}</span>
-                      <span className="text-sm font-medium">{themeOption.label}</span>
+                      <span className="text-sm font-medium">
+                        {themeOption.label}
+                      </span>
                     </button>
                   ))}
                 </div>
@@ -246,21 +276,19 @@ export function Profile() {
                 <Key className="h-5 w-5" />
                 <span>Security</span>
               </CardTitle>
-              <CardDescription>
-                Manage your account security
-              </CardDescription>
+              <CardDescription>Manage your account security</CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 className="w-full justify-start"
                 onClick={() => setShowPasswordChange(true)}
               >
                 <Key className="h-4 w-4 mr-2" />
                 Change Password
               </Button>
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 className="w-full justify-start text-red-600 hover:text-red-700"
                 onClick={handleLogout}
               >
@@ -277,13 +305,11 @@ export function Profile() {
                 <AlertTriangle className="h-5 w-5" />
                 <span>Danger Zone</span>
               </CardTitle>
-              <CardDescription>
-                Irreversible actions
-              </CardDescription>
+              <CardDescription>Irreversible actions</CardDescription>
             </CardHeader>
             <CardContent>
-              <Button 
-                variant="destructive" 
+              <Button
+                variant="destructive"
                 className="w-full justify-start"
                 onClick={() => setShowDeleteConfirm(true)}
               >
@@ -312,7 +338,12 @@ export function Profile() {
                   id="currentPassword"
                   type="password"
                   value={passwordData.currentPassword}
-                  onChange={(e) => setPasswordData({ ...passwordData, currentPassword: e.target.value })}
+                  onChange={(e) =>
+                    setPasswordData({
+                      ...passwordData,
+                      currentPassword: e.target.value,
+                    })
+                  }
                 />
               </div>
               <div>
@@ -321,7 +352,12 @@ export function Profile() {
                   id="newPassword"
                   type="password"
                   value={passwordData.newPassword}
-                  onChange={(e) => setPasswordData({ ...passwordData, newPassword: e.target.value })}
+                  onChange={(e) =>
+                    setPasswordData({
+                      ...passwordData,
+                      newPassword: e.target.value,
+                    })
+                  }
                 />
               </div>
               <div>
@@ -330,14 +366,22 @@ export function Profile() {
                   id="confirmPassword"
                   type="password"
                   value={passwordData.confirmPassword}
-                  onChange={(e) => setPasswordData({ ...passwordData, confirmPassword: e.target.value })}
+                  onChange={(e) =>
+                    setPasswordData({
+                      ...passwordData,
+                      confirmPassword: e.target.value,
+                    })
+                  }
                 />
               </div>
               <div className="flex space-x-2">
                 <Button onClick={handleChangePassword} disabled={saving}>
                   {saving ? 'Changing...' : 'Change Password'}
                 </Button>
-                <Button variant="outline" onClick={() => setShowPasswordChange(false)}>
+                <Button
+                  variant="outline"
+                  onClick={() => setShowPasswordChange(false)}
+                >
                   Cancel
                 </Button>
               </div>
@@ -353,21 +397,30 @@ export function Profile() {
             <CardHeader>
               <CardTitle className="text-red-600">Delete Account</CardTitle>
               <CardDescription>
-                This action cannot be undone. All your data will be permanently deleted.
+                This action cannot be undone. All your data will be permanently
+                deleted.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <Alert variant="destructive">
                 <AlertTriangle className="h-4 w-4" />
                 <AlertDescription>
-                  This will permanently delete your account and all associated data.
+                  This will permanently delete your account and all associated
+                  data.
                 </AlertDescription>
               </Alert>
               <div className="flex space-x-2">
-                <Button variant="destructive" onClick={handleDeleteAccount} disabled={saving}>
+                <Button
+                  variant="destructive"
+                  onClick={handleDeleteAccount}
+                  disabled={saving}
+                >
                   {saving ? 'Deleting...' : 'Yes, Delete Account'}
                 </Button>
-                <Button variant="outline" onClick={() => setShowDeleteConfirm(false)}>
+                <Button
+                  variant="outline"
+                  onClick={() => setShowDeleteConfirm(false)}
+                >
                   Cancel
                 </Button>
               </div>

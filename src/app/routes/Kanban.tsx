@@ -12,7 +12,7 @@ export function Kanban() {
   const { setQuickAddOpen, quickAddOpen } = useUIStore()
   const [selectedTask, setSelectedTask] = useState<Task | null>(null)
   const [editorOpen, setEditorOpen] = useState(false)
-  
+
   // Use data from store instead of local state
   const { tasks, loading, createTask, updateTask, deleteTask } = useDataStore()
 
@@ -103,8 +103,10 @@ export function Kanban() {
       {/* Kanban Board */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {columns.map((column) => {
-          const columnTasks = tasks.filter(task => task.status === column.status)
-          
+          const columnTasks = tasks.filter(
+            (task) => task.status === column.status
+          )
+
           return (
             <div key={column.id} className="space-y-4">
               <div className="flex items-center justify-between">
@@ -115,7 +117,7 @@ export function Kanban() {
                   {columnTasks.length}
                 </span>
               </div>
-              
+
               <div className="bg-muted/30 rounded-lg p-4 min-h-[400px]">
                 {columnTasks.length === 0 ? (
                   <div className="text-center py-8">

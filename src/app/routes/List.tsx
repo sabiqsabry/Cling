@@ -12,9 +12,10 @@ export function List() {
   const { setQuickAddOpen, quickAddOpen } = useUIStore()
   const [selectedTask, setSelectedTask] = useState<Task | null>(null)
   const [editorOpen, setEditorOpen] = useState(false)
-  
+
   // Use data from store instead of local state
-  const { tasks, lists, loading, createTask, updateTask, deleteTask } = useDataStore()
+  const { tasks, lists, loading, createTask, updateTask, deleteTask } =
+    useDataStore()
 
   const handleSaveTask = (taskData: any) => {
     if (selectedTask) {
@@ -96,21 +97,19 @@ export function List() {
           <div className="text-muted-foreground mb-4">
             <Plus className="h-12 w-12 mx-auto mb-4 opacity-50" />
             <h3 className="text-lg font-medium mb-2">No lists yet</h3>
-            <p className="text-sm">
-              Create a list to organize your tasks.
-            </p>
+            <p className="text-sm">Create a list to organize your tasks.</p>
           </div>
         </div>
       ) : (
         <div className="space-y-6">
           {lists.map((list) => {
-            const listTasks = tasks.filter(task => task.list_id === list.id)
-            
+            const listTasks = tasks.filter((task) => task.list_id === list.id)
+
             return (
               <div key={list.id} className="space-y-4">
                 <div className="flex items-center space-x-3">
-                  <div 
-                    className="w-4 h-4 rounded-full" 
+                  <div
+                    className="w-4 h-4 rounded-full"
                     style={{ backgroundColor: list.color }}
                   />
                   <h2 className="text-xl font-semibold text-foreground">
@@ -120,7 +119,7 @@ export function List() {
                     {listTasks.length} tasks
                   </span>
                 </div>
-                
+
                 {listTasks.length === 0 ? (
                   <div className="bg-muted/30 rounded-lg p-8 text-center">
                     <p className="text-muted-foreground">

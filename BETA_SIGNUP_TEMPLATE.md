@@ -2,7 +2,7 @@
 
 ## Join the Cling Beta Testing Program!
 
-We're looking for enthusiastic beta testers to help us refine Cling before its official release. If you're interested in trying out a powerful new task management application, we'd love to have you!
+We're looking for enthusiastic beta testers to help us refine Cling before its official release. Built by **Novusian**, if you're interested in trying out a powerful new task management application, we'd love to have you!
 
 ## 📋 Beta Tester Application
 
@@ -10,21 +10,25 @@ We're looking for enthusiastic beta testers to help us refine Cling before its o
 
 **Email**: [Your Email]
 
-**Platform**: 
-- [ ] macOS (version: _____)
-- [ ] Windows (version: _____)
+**Platform**:
+
+- [ ] macOS (version: **\_**)
+- [ ] Windows (version: **\_**)
 
 **Experience Level**:
+
 - [ ] Beginner (new to task management apps)
 - [ ] Intermediate (used apps like Todoist, Notion)
 - [ ] Advanced (power user, developer, productivity enthusiast)
 
 **Testing Availability**:
+
 - [ ] 1-2 hours per week
 - [ ] 3-5 hours per week
 - [ ] 5+ hours per week
 
 **Areas of Interest**:
+
 - [ ] Task management and organization
 - [ ] Calendar and time blocking
 - [ ] Focus mode and productivity
@@ -34,6 +38,7 @@ We're looking for enthusiastic beta testers to help us refine Cling before its o
 - [ ] Performance and speed
 
 **Previous Beta Testing Experience**:
+
 - [ ] First time beta tester
 - [ ] Some experience
 - [ ] Experienced beta tester

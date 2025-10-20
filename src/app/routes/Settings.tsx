@@ -1,37 +1,37 @@
 import { useState } from 'react'
-import { 
-  Settings as SettingsIcon, 
-  User, 
-  Bell, 
-  Keyboard, 
-  Palette, 
-  Download, 
-  Upload, 
-  Trash2, 
+import {
+  Settings as SettingsIcon,
+  User,
+  Bell,
+  Keyboard,
+  Palette,
+  Download,
+  Upload,
+  Trash2,
   Database,
   Cloud,
   Shield,
   Moon,
   Sun,
-  Monitor
+  Monitor,
 } from 'lucide-react'
 import { useUIStore } from '@/app/store/useUI'
 import { useThemeSync } from '@/hooks/useTheme'
 import { cn } from '@/lib/utils'
 
 export function Settings() {
-  const { 
-    menuBarMiniEnabled, 
+  const {
+    menuBarMiniEnabled,
     setMenuBarMiniEnabled,
     trayMiniEnabled,
     setTrayMiniEnabled,
     syncBannerDismissed,
-    setSyncBannerDismissed
+    setSyncBannerDismissed,
   } = useUIStore()
-  
+
   // Use theme sync hook instead of direct UI store
   const { theme, setTheme } = useThemeSync()
-  
+
   const [activeTab, setActiveTab] = useState('general')
 
   const tabs = [
@@ -54,7 +54,11 @@ export function Settings() {
   }
 
   const handleResetData = () => {
-    if (confirm('Are you sure you want to reset all data? This action cannot be undone.')) {
+    if (
+      confirm(
+        'Are you sure you want to reset all data? This action cannot be undone.'
+      )
+    ) {
       // TODO: Implement data reset
       console.log('Resetting data...')
     }
@@ -72,7 +76,9 @@ export function Settings() {
       {/* Header */}
       <div>
         <h1 className="text-3xl font-bold text-foreground">Settings</h1>
-        <p className="text-muted-foreground mt-2">Customize your Cling experience</p>
+        <p className="text-muted-foreground mt-2">
+          Customize your Cling experience
+        </p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
@@ -85,10 +91,10 @@ export function Settings() {
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
                   className={cn(
-                    "w-full flex items-center space-x-3 px-3 py-2 text-left rounded-md transition-colors",
+                    'w-full flex items-center space-x-3 px-3 py-2 text-left rounded-md transition-colors',
                     activeTab === tab.id
-                      ? "bg-primary text-primary-foreground"
-                      : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                      ? 'bg-primary text-primary-foreground'
+                      : 'text-muted-foreground hover:text-foreground hover:bg-muted'
                   )}
                 >
                   <tab.icon className="h-4 w-4" />
@@ -106,27 +112,35 @@ export function Settings() {
               {/* General Settings */}
               {activeTab === 'general' && (
                 <div className="space-y-6">
-                  <h2 className="text-xl font-semibold text-foreground">General</h2>
-                  
+                  <h2 className="text-xl font-semibold text-foreground">
+                    General
+                  </h2>
+
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
                       <div>
-                        <h3 className="font-medium text-foreground">Menu Bar Mini Window</h3>
+                        <h3 className="font-medium text-foreground">
+                          Menu Bar Mini Window
+                        </h3>
                         <p className="text-sm text-muted-foreground">
                           Enable mini window in menu bar (macOS)
                         </p>
                       </div>
                       <button
-                        onClick={() => setMenuBarMiniEnabled(!menuBarMiniEnabled)}
+                        onClick={() =>
+                          setMenuBarMiniEnabled(!menuBarMiniEnabled)
+                        }
                         className={cn(
-                          "relative inline-flex h-6 w-11 items-center rounded-full transition-colors",
-                          menuBarMiniEnabled ? "bg-primary" : "bg-muted"
+                          'relative inline-flex h-6 w-11 items-center rounded-full transition-colors',
+                          menuBarMiniEnabled ? 'bg-primary' : 'bg-muted'
                         )}
                       >
                         <span
                           className={cn(
-                            "inline-block h-4 w-4 transform rounded-full bg-white transition-transform",
-                            menuBarMiniEnabled ? "translate-x-6" : "translate-x-1"
+                            'inline-block h-4 w-4 transform rounded-full bg-white transition-transform',
+                            menuBarMiniEnabled
+                              ? 'translate-x-6'
+                              : 'translate-x-1'
                           )}
                         />
                       </button>
@@ -134,7 +148,9 @@ export function Settings() {
 
                     <div className="flex items-center justify-between">
                       <div>
-                        <h3 className="font-medium text-foreground">System Tray Mini Window</h3>
+                        <h3 className="font-medium text-foreground">
+                          System Tray Mini Window
+                        </h3>
                         <p className="text-sm text-muted-foreground">
                           Enable mini window in system tray (Windows)
                         </p>
@@ -142,14 +158,14 @@ export function Settings() {
                       <button
                         onClick={() => setTrayMiniEnabled(!trayMiniEnabled)}
                         className={cn(
-                          "relative inline-flex h-6 w-11 items-center rounded-full transition-colors",
-                          trayMiniEnabled ? "bg-primary" : "bg-muted"
+                          'relative inline-flex h-6 w-11 items-center rounded-full transition-colors',
+                          trayMiniEnabled ? 'bg-primary' : 'bg-muted'
                         )}
                       >
                         <span
                           className={cn(
-                            "inline-block h-4 w-4 transform rounded-full bg-white transition-transform",
-                            trayMiniEnabled ? "translate-x-6" : "translate-x-1"
+                            'inline-block h-4 w-4 transform rounded-full bg-white transition-transform',
+                            trayMiniEnabled ? 'translate-x-6' : 'translate-x-1'
                           )}
                         />
                       </button>
@@ -157,22 +173,28 @@ export function Settings() {
 
                     <div className="flex items-center justify-between">
                       <div>
-                        <h3 className="font-medium text-foreground">Dismiss Sync Banner</h3>
+                        <h3 className="font-medium text-foreground">
+                          Dismiss Sync Banner
+                        </h3>
                         <p className="text-sm text-muted-foreground">
                           Hide the cloud sync not configured banner
                         </p>
                       </div>
                       <button
-                        onClick={() => setSyncBannerDismissed(!syncBannerDismissed)}
+                        onClick={() =>
+                          setSyncBannerDismissed(!syncBannerDismissed)
+                        }
                         className={cn(
-                          "relative inline-flex h-6 w-11 items-center rounded-full transition-colors",
-                          syncBannerDismissed ? "bg-primary" : "bg-muted"
+                          'relative inline-flex h-6 w-11 items-center rounded-full transition-colors',
+                          syncBannerDismissed ? 'bg-primary' : 'bg-muted'
                         )}
                       >
                         <span
                           className={cn(
-                            "inline-block h-4 w-4 transform rounded-full bg-white transition-transform",
-                            syncBannerDismissed ? "translate-x-6" : "translate-x-1"
+                            'inline-block h-4 w-4 transform rounded-full bg-white transition-transform',
+                            syncBannerDismissed
+                              ? 'translate-x-6'
+                              : 'translate-x-1'
                           )}
                         />
                       </button>
@@ -184,11 +206,15 @@ export function Settings() {
               {/* Appearance Settings */}
               {activeTab === 'appearance' && (
                 <div className="space-y-6">
-                  <h2 className="text-xl font-semibold text-foreground">Appearance</h2>
-                  
+                  <h2 className="text-xl font-semibold text-foreground">
+                    Appearance
+                  </h2>
+
                   <div className="space-y-4">
                     <div>
-                      <h3 className="font-medium text-foreground mb-3">Theme</h3>
+                      <h3 className="font-medium text-foreground mb-3">
+                        Theme
+                      </h3>
                       <div className="grid grid-cols-3 gap-3">
                         {[
                           { id: 'light', label: 'Light', icon: Sun },
@@ -199,14 +225,16 @@ export function Settings() {
                             key={themeOption.id}
                             onClick={() => setTheme(themeOption.id as any)}
                             className={cn(
-                              "flex items-center space-x-2 p-3 rounded-lg border transition-colors",
+                              'flex items-center space-x-2 p-3 rounded-lg border transition-colors',
                               theme === themeOption.id
-                                ? "border-primary bg-primary/5"
-                                : "border-border hover:border-primary/50"
+                                ? 'border-primary bg-primary/5'
+                                : 'border-border hover:border-primary/50'
                             )}
                           >
                             <themeOption.icon className="h-4 w-4" />
-                            <span className="text-sm font-medium">{themeOption.label}</span>
+                            <span className="text-sm font-medium">
+                              {themeOption.label}
+                            </span>
                           </button>
                         ))}
                       </div>
@@ -218,13 +246,16 @@ export function Settings() {
               {/* Notifications Settings */}
               {activeTab === 'notifications' && (
                 <div className="space-y-6">
-                  <h2 className="text-xl font-semibold text-foreground">Notifications</h2>
-                  
+                  <h2 className="text-xl font-semibold text-foreground">
+                    Notifications
+                  </h2>
+
                   <div className="space-y-4">
                     <div className="text-center py-12">
                       <Bell className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
                       <p className="text-muted-foreground">
-                        Notification settings will be available when cloud sync is configured.
+                        Notification settings will be available when cloud sync
+                        is configured.
                       </p>
                     </div>
                   </div>
@@ -234,40 +265,62 @@ export function Settings() {
               {/* Shortcuts Settings */}
               {activeTab === 'shortcuts' && (
                 <div className="space-y-6">
-                  <h2 className="text-xl font-semibold text-foreground">Keyboard Shortcuts</h2>
-                  
+                  <h2 className="text-xl font-semibold text-foreground">
+                    Keyboard Shortcuts
+                  </h2>
+
                   <div className="space-y-4">
                     <div className="overflow-hidden">
                       <table className="w-full">
                         <thead>
                           <tr className="border-b border-border">
-                            <th className="text-left py-2 font-medium text-foreground">Action</th>
-                            <th className="text-left py-2 font-medium text-foreground">Shortcut</th>
+                            <th className="text-left py-2 font-medium text-foreground">
+                              Action
+                            </th>
+                            <th className="text-left py-2 font-medium text-foreground">
+                              Shortcut
+                            </th>
                           </tr>
                         </thead>
                         <tbody className="divide-y divide-border">
                           <tr>
-                            <td className="py-2 text-sm text-foreground">Quick Add</td>
+                            <td className="py-2 text-sm text-foreground">
+                              Quick Add
+                            </td>
                             <td className="py-2 text-sm text-muted-foreground">
-                              <kbd className="px-2 py-1 bg-muted rounded text-xs">Cmd+Shift+A</kbd>
+                              <kbd className="px-2 py-1 bg-muted rounded text-xs">
+                                Cmd+Shift+A
+                              </kbd>
                             </td>
                           </tr>
                           <tr>
-                            <td className="py-2 text-sm text-foreground">Toggle Mini Window</td>
+                            <td className="py-2 text-sm text-foreground">
+                              Toggle Mini Window
+                            </td>
                             <td className="py-2 text-sm text-muted-foreground">
-                              <kbd className="px-2 py-1 bg-muted rounded text-xs">Cmd+Shift+O</kbd>
+                              <kbd className="px-2 py-1 bg-muted rounded text-xs">
+                                Cmd+Shift+O
+                              </kbd>
                             </td>
                           </tr>
                           <tr>
-                            <td className="py-2 text-sm text-foreground">Open Search</td>
+                            <td className="py-2 text-sm text-foreground">
+                              Open Search
+                            </td>
                             <td className="py-2 text-sm text-muted-foreground">
-                              <kbd className="px-2 py-1 bg-muted rounded text-xs">Cmd+K</kbd>
+                              <kbd className="px-2 py-1 bg-muted rounded text-xs">
+                                Cmd+K
+                              </kbd>
                             </td>
                           </tr>
                           <tr>
-                            <td className="py-2 text-sm text-foreground">Complete Selected Task</td>
+                            <td className="py-2 text-sm text-foreground">
+                              Complete Selected Task
+                            </td>
                             <td className="py-2 text-sm text-muted-foreground">
-                              <kbd className="px-2 py-1 bg-muted rounded text-xs">Cmd+Enter</kbd>
+                              <kbd className="px-2 py-1 bg-muted rounded text-xs">
+                                Cmd+Enter
+                              </kbd>
                             </td>
                           </tr>
                         </tbody>
@@ -280,12 +333,16 @@ export function Settings() {
               {/* Data & Sync Settings */}
               {activeTab === 'data' && (
                 <div className="space-y-6">
-                  <h2 className="text-xl font-semibold text-foreground">Data & Sync</h2>
-                  
+                  <h2 className="text-xl font-semibold text-foreground">
+                    Data & Sync
+                  </h2>
+
                   <div className="space-y-6">
                     {/* Local Storage */}
                     <div>
-                      <h3 className="font-medium text-foreground mb-3">Local Storage</h3>
+                      <h3 className="font-medium text-foreground mb-3">
+                        Local Storage
+                      </h3>
                       <div className="space-y-3">
                         <button
                           onClick={handleExportData}
@@ -294,7 +351,7 @@ export function Settings() {
                           <Download className="h-4 w-4" />
                           <span>Export Data</span>
                         </button>
-                        
+
                         <button
                           onClick={handleImportData}
                           className="flex items-center space-x-2 px-4 py-2 bg-muted text-muted-foreground rounded-lg hover:bg-muted/80 transition-colors"
@@ -302,7 +359,7 @@ export function Settings() {
                           <Upload className="h-4 w-4" />
                           <span>Import Data</span>
                         </button>
-                        
+
                         <button
                           onClick={handleSeedData}
                           className="flex items-center space-x-2 px-4 py-2 bg-muted text-muted-foreground rounded-lg hover:bg-muted/80 transition-colors"
@@ -310,7 +367,7 @@ export function Settings() {
                           <Database className="h-4 w-4" />
                           <span>Reset to Sample Data</span>
                         </button>
-                        
+
                         <button
                           onClick={handleResetData}
                           className="flex items-center space-x-2 px-4 py-2 text-red-600 hover:text-red-700 transition-colors"
@@ -323,14 +380,19 @@ export function Settings() {
 
                     {/* Cloud Sync */}
                     <div>
-                      <h3 className="font-medium text-foreground mb-3">Cloud Sync</h3>
+                      <h3 className="font-medium text-foreground mb-3">
+                        Cloud Sync
+                      </h3>
                       <div className="bg-muted p-4 rounded-lg">
                         <div className="flex items-center space-x-2 mb-2">
                           <Cloud className="h-4 w-4 text-muted-foreground" />
-                          <span className="text-sm font-medium text-foreground">Not Configured</span>
+                          <span className="text-sm font-medium text-foreground">
+                            Not Configured
+                          </span>
                         </div>
                         <p className="text-sm text-muted-foreground">
-                          Cloud sync is not configured. Your data is stored locally and encrypted with SQLCipher.
+                          Cloud sync is not configured. Your data is stored
+                          locally and encrypted with SQLCipher.
                         </p>
                         <button className="mt-3 text-sm text-primary hover:text-primary/80 transition-colors">
                           Configure Supabase Sync →
@@ -340,14 +402,19 @@ export function Settings() {
 
                     {/* Security */}
                     <div>
-                      <h3 className="font-medium text-foreground mb-3">Security</h3>
+                      <h3 className="font-medium text-foreground mb-3">
+                        Security
+                      </h3>
                       <div className="bg-muted p-4 rounded-lg">
                         <div className="flex items-center space-x-2 mb-2">
                           <Shield className="h-4 w-4 text-green-600" />
-                          <span className="text-sm font-medium text-foreground">Data Encrypted</span>
+                          <span className="text-sm font-medium text-foreground">
+                            Data Encrypted
+                          </span>
                         </div>
                         <p className="text-sm text-muted-foreground">
-                          Your local data is encrypted using SQLCipher with a key stored securely in your system keychain.
+                          Your local data is encrypted using SQLCipher with a
+                          key stored securely in your system keychain.
                         </p>
                       </div>
                     </div>
@@ -358,25 +425,38 @@ export function Settings() {
               {/* About Settings */}
               {activeTab === 'about' && (
                 <div className="space-y-6">
-                  <h2 className="text-xl font-semibold text-foreground">About</h2>
-                  
+                  <h2 className="text-xl font-semibold text-foreground">
+                    About
+                  </h2>
+
                   <div className="space-y-4">
                     <div className="bg-muted p-6 rounded-lg text-center">
-                      <h3 className="text-2xl font-bold text-foreground mb-2">Cling</h3>
-                      <p className="text-muted-foreground mb-4">Version 1.0.0</p>
+                      <h3 className="text-2xl font-bold text-foreground mb-2">
+                        Cling
+                      </h3>
+                      <p className="text-muted-foreground mb-4">
+                        Version 1.0.0
+                      </p>
                       <p className="text-sm text-muted-foreground">
-                        A powerful, offline-first task management application built with Tauri and React.
+                        A powerful, offline-first task management application
+                        built with Tauri and React.
                       </p>
                     </div>
-                    
+
                     <div className="space-y-2 text-sm">
                       <div className="flex justify-between">
-                        <span className="text-muted-foreground">Built with:</span>
-                        <span className="text-foreground">Tauri 2.x, React 18, TypeScript</span>
+                        <span className="text-muted-foreground">
+                          Built with:
+                        </span>
+                        <span className="text-foreground">
+                          Tauri 2.x, React 18, TypeScript
+                        </span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">Database:</span>
-                        <span className="text-foreground">SQLite with SQLCipher</span>
+                        <span className="text-foreground">
+                          SQLite with SQLCipher
+                        </span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">License:</span>

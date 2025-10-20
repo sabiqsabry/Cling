@@ -57,21 +57,24 @@ export const useAuthStore = create<AuthState>()(
       // Actions
       initialize: async () => {
         set({ isLoading: true })
-        
+
         try {
           // Get initial session
-          const { data: { session }, error } = await supabase.auth.getSession()
+          const {
+            data: { session },
+            error,
+          } = await supabase.auth.getSession()
           if (error) throw error
 
           if (session?.user) {
             // Load user profile
             const profile = await loadUserProfile(session.user.id)
-            set({ 
-              user: session.user, 
+            set({
+              user: session.user,
               profile,
-              session, 
-              isAuthenticated: true, 
-              isLoading: false 
+              session,
+              isAuthenticated: true,
+              isLoading: false,
             })
           } else {
             set({ isLoading: false })
@@ -81,18 +84,18 @@ export const useAuthStore = create<AuthState>()(
           supabase.auth.onAuthStateChange(async (event, session) => {
             if (event === 'SIGNED_IN' && session?.user) {
               const profile = await loadUserProfile(session.user.id)
-              set({ 
-                user: session.user, 
+              set({
+                user: session.user,
                 profile,
-                session, 
-                isAuthenticated: true 
+                session,
+                isAuthenticated: true,
               })
             } else if (event === 'SIGNED_OUT') {
-              set({ 
-                user: null, 
+              set({
+                user: null,
                 profile: null,
-                session: null, 
-                isAuthenticated: false 
+                session: null,
+                isAuthenticated: false,
               })
             }
           })
@@ -110,7 +113,7 @@ export const useAuthStore = create<AuthState>()(
             password,
           })
           if (error) throw error
-          
+
           set({ isLoading: false })
         } catch (error) {
           set({ isLoading: false })
@@ -131,7 +134,7 @@ export const useAuthStore = create<AuthState>()(
             },
           })
           if (error) throw error
-          
+
           set({ isLoading: false })
         } catch (error) {
           set({ isLoading: false })
@@ -144,14 +147,14 @@ export const useAuthStore = create<AuthState>()(
         try {
           const { error } = await supabase.auth.signOut()
           if (error) throw error
-          
-          set({ 
-            user: null, 
+
+          set({
+            user: null,
             profile: null,
             session: null,
             isAuthenticated: false,
             currentWorkspaceId: null,
-            isLoading: false 
+            isLoading: false,
           })
         } catch (error) {
           set({ isLoading: false })
@@ -162,12 +165,14 @@ export const useAuthStore = create<AuthState>()(
       checkAuth: async () => {
         set({ isLoading: true })
         try {
-          const { data: { session } } = await supabase.auth.getSession()
-          set({ 
+          const {
+            data: { session },
+          } = await supabase.auth.getSession()
+          set({
             session,
             user: session?.user || null,
             isAuthenticated: !!session?.user,
-            isLoading: false 
+            isLoading: false,
           })
         } catch (error) {
           set({ isLoading: false })
@@ -238,7 +243,9 @@ async function loadUserProfile(userId: string): Promise<Profile | null> {
 
 async function createUserProfile(userId: string): Promise<Profile | null> {
   try {
-    const { data: { user } } = await supabase.auth.getUser()
+    const {
+      data: { user },
+    } = await supabase.auth.getUser()
     if (!user) throw new Error('User not found')
 
     const { data, error } = await supabase

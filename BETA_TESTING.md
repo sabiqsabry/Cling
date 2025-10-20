@@ -1,10 +1,11 @@
 # 🚀 Cling Beta Testing Guide
 
-Thank you for your interest in beta testing **Cling** - a powerful, offline-first task management application! This guide will help you get started with testing on both Mac and Windows.
+Thank you for your interest in beta testing **Cling** - a powerful, offline-first task management application built by **Novusian**! This guide will help you get started with testing on both Mac and Windows.
 
 ## 📋 What is Cling?
 
 Cling is a TickTick-style productivity application built with modern technologies:
+
 - **Tauri 2.x + React 18 + TypeScript** for the frontend
 - **SQLite with SQLCipher** for secure local storage
 - **Supabase integration** for cloud sync (optional)
@@ -13,6 +14,7 @@ Cling is a TickTick-style productivity application built with modern technologie
 ## 🎯 Beta Testing Goals
 
 We're looking for feedback on:
+
 - **User Experience**: Navigation, workflow, and overall usability
 - **Performance**: App responsiveness and speed
 - **Features**: Task management, calendar, focus mode, and habits
@@ -59,6 +61,7 @@ We're looking for feedback on:
 If you want to build from source or contribute:
 
 ### Prerequisites
+
 - **Node.js** 18+ and **pnpm**
 - **Rust** toolchain (install via rustup.rs)
 - **Git**
@@ -86,6 +89,7 @@ pnpm tauri:build
 ## 🎮 Getting Started
 
 ### 1. First Launch
+
 - The app will show an authentication modal
 - You can either:
   - **Sign up** for a new account (cloud sync enabled)
@@ -94,27 +98,32 @@ pnpm tauri:build
 ### 2. Key Features to Test
 
 #### 📝 Task Management
+
 - **Quick Add**: Press `Cmd/Ctrl + Shift + A` or click the "Quick Add" button
 - **Natural Language**: Try "Submit report tomorrow 3pm #work P1"
 - **Task Editing**: Click on any task to open the detailed editor
 - **Drag & Drop**: Move tasks between lists in Kanban view
 
 #### 📅 Calendar & Timeline
+
 - **Calendar View**: Switch between Day/Week/Month views
 - **Time Blocking**: Drag tasks to specific time slots
 - **Timeline**: Visual representation of your scheduled tasks
 
 #### 🎯 Focus Mode
+
 - **Pomodoro Timer**: Built-in 25-minute focus sessions
 - **Task Linking**: Connect focus sessions to specific tasks
 - **Statistics**: Track your productivity patterns
 
 #### 📊 Habits Tracking
+
 - **Habit Creation**: Set up daily/weekly habits
 - **Logging**: Mark habits as complete
 - **Streak Tracking**: Visual streak indicators
 
 #### 🌙 Dark Mode
+
 - **Theme Switching**: Light, Dark, or System preference
 - **System Integration**: Automatically follows OS theme
 - **Cross-device Sync**: Theme preference syncs across devices
@@ -142,9 +151,9 @@ When reporting bugs, please include:
 **Platform**: macOS/Windows (version)
 **Cling Version**: (if known)
 **Steps to Reproduce**:
-1. 
-2. 
-3. 
+1.
+2.
+3.
 
 **Expected Behavior**:
 What should have happened?
@@ -176,6 +185,7 @@ Any other relevant information
 ## 🧪 Testing Scenarios
 
 ### Basic Functionality
+
 - [ ] Create, edit, and delete tasks
 - [ ] Create and manage lists
 - [ ] Use Quick Add with natural language
@@ -183,6 +193,7 @@ Any other relevant information
 - [ ] Test dark/light mode switching
 
 ### Advanced Features
+
 - [ ] Calendar time blocking
 - [ ] Kanban drag-and-drop
 - [ ] Focus mode with Pomodoro timer
@@ -190,12 +201,14 @@ Any other relevant information
 - [ ] Profile management
 
 ### Cross-platform Testing
+
 - [ ] Data consistency between Mac and Windows
 - [ ] Theme synchronization
 - [ ] Cloud sync functionality
 - [ ] Performance comparison
 
 ### Edge Cases
+
 - [ ] Large number of tasks (100+)
 - [ ] Long task descriptions
 - [ ] Special characters in task names
@@ -205,17 +218,20 @@ Any other relevant information
 ## 📊 Data & Privacy
 
 ### Local Storage
+
 - All data is stored locally using SQLite with SQLCipher encryption
 - Your data is encrypted and secure on your device
 - No data is sent anywhere without your explicit consent
 
 ### Cloud Sync (Optional)
+
 - Uses Supabase for cloud synchronization
 - Only enabled if you create an account
 - Your data is encrypted in transit and at rest
 - You can disable sync anytime
 
 ### Beta Data
+
 - Beta testing data will not be used for production
 - Consider this a testing environment
 - You can reset your data anytime from Settings
@@ -230,11 +246,13 @@ Any other relevant information
 ## 📞 Support & Community
 
 ### Getting Help
+
 - Check the [GitHub Issues](https://github.com/sabiqsabry/Cling/issues) for known problems
 - Join our [Discord/Slack community] for real-time support
 - Email us directly for urgent issues
 
 ### Staying Updated
+
 - Watch the GitHub repository for updates
 - Follow release notes for new features and fixes
 - Join the beta tester mailing list
@@ -254,7 +272,8 @@ Your participation in the beta testing program is invaluable. Every bug report, 
 
 ---
 
-*This beta testing guide will be updated as we receive feedback and add new features. Please check back regularly for updates.*
+_This beta testing guide will be updated as we receive feedback and add new features. Please check back regularly for updates._
 
 **Last Updated**: January 2025
 **Version**: Beta 1.0.0
+**Built by**: Novusian

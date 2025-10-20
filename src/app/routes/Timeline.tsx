@@ -12,36 +12,39 @@ export function Timeline() {
   const [selectedTask, setSelectedTask] = useState<Task | null>(null)
   const [editorOpen, setEditorOpen] = useState(false)
   const timelineRef = useRef<HTMLDivElement>(null)
-  
+
   // Use data from store instead of local state
   const { tasks, loading, createTask, updateTask, deleteTask } = useDataStore()
 
-  const handleSaveTask = useCallback((taskData: any) => {
-    if (selectedTask) {
-      updateTask(selectedTask.id, {
-        title: taskData.title,
-        description: taskData.description,
-        priority: taskData.priority,
-        status: taskData.status,
-        start_at: taskData.start_at,
-        end_at: taskData.end_at,
-      })
-    } else {
-      createTask({
-        list_id: taskData.list_id || null,
-        title: taskData.title,
-        description: taskData.description,
-        status: taskData.status || 'todo',
-        priority: taskData.priority || 4,
-        start_at: taskData.start_at,
-        end_at: taskData.end_at,
-        completed_at: null,
-        position: 0,
-      })
-    }
-    setEditorOpen(false)
-    setSelectedTask(null)
-  }, [selectedTask, updateTask, createTask])
+  const handleSaveTask = useCallback(
+    (taskData: any) => {
+      if (selectedTask) {
+        updateTask(selectedTask.id, {
+          title: taskData.title,
+          description: taskData.description,
+          priority: taskData.priority,
+          status: taskData.status,
+          start_at: taskData.start_at,
+          end_at: taskData.end_at,
+        })
+      } else {
+        createTask({
+          list_id: taskData.list_id || null,
+          title: taskData.title,
+          description: taskData.description,
+          status: taskData.status || 'todo',
+          priority: taskData.priority || 4,
+          start_at: taskData.start_at,
+          end_at: taskData.end_at,
+          completed_at: null,
+          position: 0,
+        })
+      }
+      setEditorOpen(false)
+      setSelectedTask(null)
+    },
+    [selectedTask, updateTask, createTask]
+  )
 
   const handleDeleteTask = (taskId: string) => {
     deleteTask(taskId)
@@ -147,7 +150,9 @@ export function Timeline() {
               <div className="text-center">
                 <div className="text-muted-foreground mb-4">
                   <Plus className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                  <h3 className="text-lg font-medium mb-2">No tasks with dates</h3>
+                  <h3 className="text-lg font-medium mb-2">
+                    No tasks with dates
+                  </h3>
                   <p className="text-sm">
                     Add tasks with start dates to see them on the timeline.
                   </p>
@@ -164,7 +169,7 @@ export function Timeline() {
           ) : (
             <div className="space-y-4">
               {tasks
-                .filter(task => task.start_at)
+                .filter((task) => task.start_at)
                 .map((task) => (
                   <div
                     key={task.id}
@@ -174,15 +179,19 @@ export function Timeline() {
                       setEditorOpen(true)
                     }}
                   >
-                    <div 
-                      className="w-3 h-3 rounded-full" 
+                    <div
+                      className="w-3 h-3 rounded-full"
                       style={{ backgroundColor: getEventColor(task.priority) }}
                     />
                     <div className="flex-1">
-                      <h4 className="font-medium text-foreground">{task.title}</h4>
+                      <h4 className="font-medium text-foreground">
+                        {task.title}
+                      </h4>
                       <p className="text-sm text-muted-foreground">
-                        {task.start_at && new Date(task.start_at).toLocaleDateString()}
-                        {task.end_at && ` - ${new Date(task.end_at).toLocaleDateString()}`}
+                        {task.start_at &&
+                          new Date(task.start_at).toLocaleDateString()}
+                        {task.end_at &&
+                          ` - ${new Date(task.end_at).toLocaleDateString()}`}
                       </p>
                     </div>
                   </div>

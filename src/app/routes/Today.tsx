@@ -12,13 +12,13 @@ export function Today() {
   const { setQuickAddOpen, quickAddOpen } = useUIStore()
   const [selectedTask, setSelectedTask] = useState<Task | null>(null)
   const [editorOpen, setEditorOpen] = useState(false)
-  
+
   // Use data from store instead of local state
   const { tasks, loading, createTask, updateTask, deleteTask } = useDataStore()
 
   // Filter tasks for today
   const today = new Date().toISOString().split('T')[0]
-  const todayTasks = tasks.filter(task => {
+  const todayTasks = tasks.filter((task) => {
     if (task.due_at) {
       return task.due_at.split('T')[0] === today
     }

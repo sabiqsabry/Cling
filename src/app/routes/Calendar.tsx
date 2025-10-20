@@ -18,7 +18,7 @@ export function Calendar() {
   const [selectedTask, setSelectedTask] = useState<Task | null>(null)
   const [editorOpen, setEditorOpen] = useState(false)
   const calendarRef = useRef<FullCalendar>(null)
-  
+
   // Use data from store instead of local state
   const { tasks, loading, createTask, updateTask, deleteTask } = useDataStore()
 
@@ -62,20 +62,21 @@ export function Calendar() {
   const handleDateSelect = (selectInfo: any) => {
     const start = selectInfo.start
     const end = selectInfo.end
-    
+
     // Create a new task for the selected time slot
-    const newTask: Omit<Task, 'id' | 'user_id' | 'created_at' | 'updated_at'> = {
-      list_id: null,
-      title: 'New Task',
-      description: '',
-      status: 'todo',
-      priority: 4,
-      start_at: start.toISOString(),
-      end_at: end.toISOString(),
-      completed_at: null,
-      position: 0,
-    }
-    
+    const newTask: Omit<Task, 'id' | 'user_id' | 'created_at' | 'updated_at'> =
+      {
+        list_id: null,
+        title: 'New Task',
+        description: '',
+        status: 'todo',
+        priority: 4,
+        start_at: start.toISOString(),
+        end_at: end.toISOString(),
+        completed_at: null,
+        position: 0,
+      }
+
     createTask(newTask)
     setQuickAddOpen(true)
   }
@@ -159,7 +160,9 @@ export function Calendar() {
       end: task.end_at || undefined,
       allDay:
         !task.start_at?.includes('T') ||
-        (task.end_at && new Date(task.end_at).getTime() - new Date(task.start_at).getTime() >= 24 * 60 * 60 * 1000),
+        (task.end_at &&
+          new Date(task.end_at).getTime() - new Date(task.start_at).getTime() >=
+            24 * 60 * 60 * 1000),
       backgroundColor: getEventColor(task.priority),
       borderColor: getEventColor(task.priority),
       extendedProps: {

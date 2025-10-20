@@ -57,17 +57,20 @@ export function useTheme() {
   return {
     theme,
     setTheme,
-    isDark: theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches),
+    isDark:
+      theme === 'dark' ||
+      (theme === 'system' &&
+        window.matchMedia('(prefers-color-scheme: dark)').matches),
   }
 }
 
 // Initialize theme on app startup
 export function initializeTheme() {
   const root = document.documentElement
-  const savedTheme = localStorage.getItem('cling-ui') 
-    ? JSON.parse(localStorage.getItem('cling-ui')!).theme 
+  const savedTheme = localStorage.getItem('cling-ui')
+    ? JSON.parse(localStorage.getItem('cling-ui')!).theme
     : 'system'
-  
+
   const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
 
   if (savedTheme === 'system') {
