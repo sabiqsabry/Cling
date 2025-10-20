@@ -249,6 +249,7 @@ async function createUserProfile(userId: string): Promise<Profile | null> {
         full_name: user.user_metadata?.full_name || null,
         avatar_url: user.user_metadata?.avatar_url || null,
         timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+        theme_preference: 'system',
       })
       .select()
       .single()

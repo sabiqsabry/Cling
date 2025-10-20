@@ -11,16 +11,25 @@ import { Timeline } from './app/routes/Timeline'
 import { Focus } from './app/routes/Focus'
 import { Habits } from './app/routes/Habits'
 import { Settings } from './app/routes/Settings'
+import { Profile } from './app/routes/Profile'
 import { useAuthStore } from './app/store/useAuth'
 import { useDataStore } from './app/store/useData'
+import { useTheme } from './lib/theme'
+import { initializeTheme } from './lib/theme'
 import { Loader2 } from 'lucide-react'
 
 function App() {
   const [showAuthModal, setShowAuthModal] = useState(false)
   const { isAuthenticated, isLoading: authLoading, initialize: initAuth } = useAuthStore()
   const { initialize: initData } = useDataStore()
+  
+  // Initialize theme system
+  useTheme()
 
   useEffect(() => {
+    // Initialize theme on app startup
+    initializeTheme()
+    
     // Initialize authentication
     initAuth()
   }, [initAuth])
@@ -55,17 +64,18 @@ function App() {
 
   return (
     <AppShell>
-      <Routes>
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/today" element={<Today />} />
-        <Route path="/list" element={<List />} />
-        <Route path="/kanban" element={<Kanban />} />
-        <Route path="/calendar" element={<Calendar />} />
-        <Route path="/timeline" element={<Timeline />} />
-        <Route path="/focus" element={<Focus />} />
-        <Route path="/habits" element={<Habits />} />
-        <Route path="/settings" element={<Settings />} />
-      </Routes>
+              <Routes>
+                <Route path="/" element={<Dashboard />} />
+                <Route path="/today" element={<Today />} />
+                <Route path="/list" element={<List />} />
+                <Route path="/kanban" element={<Kanban />} />
+                <Route path="/calendar" element={<Calendar />} />
+                <Route path="/timeline" element={<Timeline />} />
+                <Route path="/focus" element={<Focus />} />
+                <Route path="/habits" element={<Habits />} />
+                <Route path="/settings" element={<Settings />} />
+                <Route path="/profile" element={<Profile />} />
+              </Routes>
     </AppShell>
   )
 }

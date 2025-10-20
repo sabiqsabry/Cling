@@ -1,11 +1,13 @@
 import { Search, Plus, Bell, Focus, User } from 'lucide-react'
 import { useUIStore } from '@/app/store/useUI'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 export function Topbar() {
   const setQuickAddOpen = useUIStore((state) => state.setQuickAddOpen)
   const focusMode = useUIStore((state) => state.focusMode)
   const setFocusMode = useUIStore((state) => state.setFocusMode)
+  const navigate = useNavigate()
 
   const [searchQuery, setSearchQuery] = useState('')
 
@@ -75,8 +77,9 @@ export function Topbar() {
 
           {/* User Menu */}
           <button
+            onClick={() => navigate('/profile')}
             className="p-2 text-muted-foreground hover:text-foreground hover:bg-muted rounded-md transition-colors"
-            title="User Menu"
+            title="User Profile"
           >
             <User className="h-4 w-4" />
           </button>

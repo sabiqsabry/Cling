@@ -16,12 +16,11 @@ import {
   Monitor
 } from 'lucide-react'
 import { useUIStore } from '@/app/store/useUI'
+import { useThemeSync } from '@/hooks/useTheme'
 import { cn } from '@/lib/utils'
 
 export function Settings() {
   const { 
-    theme, 
-    setTheme, 
     menuBarMiniEnabled, 
     setMenuBarMiniEnabled,
     trayMiniEnabled,
@@ -29,6 +28,9 @@ export function Settings() {
     syncBannerDismissed,
     setSyncBannerDismissed
   } = useUIStore()
+  
+  // Use theme sync hook instead of direct UI store
+  const { theme, setTheme } = useThemeSync()
   
   const [activeTab, setActiveTab] = useState('general')
 

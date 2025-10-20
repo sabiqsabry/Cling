@@ -26,6 +26,7 @@ export interface Database {
           full_name: string | null
           avatar_url: string | null
           timezone: string
+          theme_preference: string | null
           created_at: string
           updated_at: string
         }
@@ -35,11 +36,13 @@ export interface Database {
           full_name?: string | null
           avatar_url?: string | null
           timezone?: string
+          theme_preference?: string | null
         }
         Update: {
           full_name?: string | null
           avatar_url?: string | null
           timezone?: string
+          theme_preference?: string | null
           updated_at?: string
         }
       }
